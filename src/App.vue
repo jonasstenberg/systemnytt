@@ -1,14 +1,14 @@
 <template>
   <div id="app">
+    <h1>systemnytt</h1>
     <div id="nav">
       <RouterLink to="/">
-        Home
+        Öl
       </RouterLink> |
-      <RouterLink to="/about">
-        About
+      <RouterLink to="/wines">
+        Vin
       </RouterLink>
     </div>
-    <h1>systemnytt</h1>
     <RouterView />
   </div>
 </template>
