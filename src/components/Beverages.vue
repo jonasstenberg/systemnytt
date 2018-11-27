@@ -29,7 +29,7 @@
             {{ beverage.name }} {{ beverage.additional_name }} ({{ beverage.alcohol }})
           </td>
           <td class="beverage-attribute__price">
-            {{ normalizePrice(beverage.price.amount) }}
+            {{ beverage.price.amount.toFixed(2) }}
           </td>
         </tr>
       </tbody>
@@ -69,10 +69,6 @@ export default {
         default:
           return Bottle;
       }
-    },
-
-    normalizePrice(price) {
-      return price.toFixed(2);
     },
 
     nextRelease() {
