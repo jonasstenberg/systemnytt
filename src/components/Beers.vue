@@ -1,21 +1,14 @@
 <template>
-  <div class="home">
-    <h1>systemnytt</h1>
-    <table class="beers">
+  <div class="beers">
+    <table class="beers__list">
       <thead>
         <tr>
           <th class="beer-icon" />
           <th class="beer-attribute__name">
-            Name
-          </th>
-          <th class="beer-attribute__brewery">
-            Brewery
+            Namn
           </th>
           <th class="beer-attribute__price">
-            Price
-          </th>
-          <th class="beer-attribute__abv">
-            ABV
+            Pris (SEK)
           </th>
         </tr>
       </thead>
@@ -23,22 +16,17 @@
         <tr
           v-for="beer of beers"
           :key="beer.id">
-          <td
-            :class="['beer-icon', {
-              'beer-icon__bottle': beer.packaging === 'Flaska',
-              'beer-icon__can': beer.packaging === 'Burk',
-            }]" />
-          <td class="beer-attribute__name">
-            {{ beer.additional_name }}
+          <td class="beer-icon">
+            <span class="beer-icon__helper" />
+            <img
+              class="beer-icon__image"
+              :src="iconUrl(beer.packaging)">
           </td>
-          <td class="beer-attribute__brewery">
-            {{ beer.name }}
+          <td class="beer-attribute__name">
+            {{ beer.name }} {{ beer.additional_name }} ({{ beer.alcohol }})
           </td>
           <td class="beer-attribute__price">
-            {{ beer.price.amount }} {{ beer.price.currency }}
-          </td>
-          <td class="beer-attribute__abv">
-            {{ beer.alcohol }}
+            {{ normalizePrice(beer.price.amount) }}
           </td>
         </tr>
       </tbody>
@@ -48,6 +36,8 @@
 
 <script>
 import axios from 'axios';
+import BeerCan from '../assets/beer-can.svg';
+import BeerBottle from '../assets/beer-bottle.svg';
 
 export default {
   name: 'Beers',
@@ -55,6 +45,8 @@ export default {
   data() {
     return {
       beers: [],
+      imageBottle: '../assets/beer-bottle.png',
+      imageCan: '../assets/beer-can.png',
     };
   },
 
@@ -66,21 +58,38 @@ export default {
       console.log(err);
     }
   },
+
+  methods: {
+    iconUrl(packaging) {
+      switch (packaging) {
+        case 'Burk':
+          return BeerCan;
+        default:
+          return BeerBottle;
+      }
+    },
+
+    normalizePrice(price) {
+      return price.toFixed(2);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.beer-icon {
-  display: block;
-  text-indent: -9999px;
-  width: 3rem;
-  height: 3rem;
-  background-size: 3rem;
+.beers {
+  max-width: 768px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #f1f1f1;
+  -webkit-box-shadow: 3px 3px 10px 5px #e7e7e7;
+  -moz-box-shadow: 3px 3px 10px 5px #e7e7e7;
+  box-shadow: 3px 3px 10px 5px #e7e7e7;
 }
 
-.beers {
+.beers__list {
+  width: 100%;
   border-collapse: collapse;
-  max-width: 1024px;
   table-layout: fixed;
 }
 
@@ -92,30 +101,47 @@ th, td {
   text-align: left;
 }
 
-.beer-icon__bottle {
-  background: url("../assets/beer-bottle.svg");
+th {
+  height: 60px;
+  display: table-cell;
+  vertical-align: bottom;  /* Align the element at the bottom   */
 }
 
-.beer-icon__can {
-  background: url("../assets/beer-can.svg");
+.beer-icon {
+  width: 48px;
+  height: 48px;
+  white-space: nowrap;
+  margin: 1em 0;
+}
+
+.beer-icon__helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.beer-icon__image {
+  vertical-align: middle;
+  max-width: 48px;
+  max-height: 48px
 }
 
 .beer-attribute__name {
-  width: 40%;
-}
-
-.beer-attribute__brewery {
-  width: 20%;
-  font-weight: bold;
+  max-width: 488px;
 }
 
 .beer-attribute__price {
-  width: 10%;
+  width: 100px;
+  text-align: right;
+  padding-right: 0.5rem;
 }
 
-.beer-attribute__abv {
-  width: 20%;
-  text-align: right;
+@media (min-width: 768px) {
+  th, td {
+    padding: 0.5rem;
+  }
+  .beer-attribute__price {
+    padding-right: 1rem;
+  }
 }
 </style>
-
