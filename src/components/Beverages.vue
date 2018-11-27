@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import BeerCan from '../assets/can.svg';
-import BeerBottle from '../assets/bottle.svg';
+import Can from '../assets/can.svg';
+import Bottle from '../assets/bottle.svg';
 
 export default {
   name: 'Beverages',
@@ -65,9 +65,9 @@ export default {
     iconUrl(packaging) {
       switch (packaging) {
         case 'Burk':
-          return BeerCan;
+          return Can;
         default:
-          return BeerBottle;
+          return Bottle;
       }
     },
 
