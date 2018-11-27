@@ -1,12 +1,26 @@
-# systemnyt
+# systemnytt
 
-## Project setup
-```
-npm install
+> Beverage news from Systembolaget
+
+## Install
+
+Clone the repository:
+
+```sh
+$ git clone git@github.com:jonasstenberg/systemnytt.git
 ```
 
-### Compiles and hot-reloads for development
+Install dependencies:
+
+```sh
+$ npm install
 ```
+
+## Usage
+
+Serve with hot reload at localhost:8080
+
+```sh
 npm run serve
 ```
 
@@ -24,6 +38,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
