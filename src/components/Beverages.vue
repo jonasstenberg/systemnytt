@@ -4,8 +4,8 @@
     class="beverages">
     <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <div class="beverages__list">
-      <accordion>
-        <accordion-item
+      <Accordion>
+        <AccordionItem
           v-for="beverage of beverages"
           :key="beverage.id">
           <div
@@ -28,8 +28,8 @@
             class="beverages__more-info">
             More info
           </div>
-        </accordion-item>
-      </accordion>
+        </AccordionItem>
+      </Accordion>
     </div>
   </div>
   <div
@@ -50,13 +50,12 @@ import Bottle from '../assets/bottle.svg';
 import Accordion from './Accordion.vue';
 import AccordionItem from './AccordionItem.vue';
 
-
 export default {
   name: 'Beverages',
 
   components: {
     Accordion,
-    AccordionItem
+    AccordionItem,
   },
 
   props: {
@@ -128,11 +127,17 @@ h2 {
   flex-shrink: 0;
   margin-left: auto;
   margin-right: 1rem;
+  min-width: 4rem;
+  text-align: right;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+  .beverages {
+    margin: 1rem auto;
+  }
+
   .beverage-attribute__price {
-    padding-right: 1rem;
+    margin-right: 0;
   }
 }
 </style>

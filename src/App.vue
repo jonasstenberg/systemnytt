@@ -64,10 +64,20 @@ body {
 
 .btn__beer {
   background-image: url('./assets/beer.svg');
-  background-size: 2.5rem;
 }
 
 .btn__wine {
   background-image: url('./assets/wine.svg');
+}
+
+@media (max-width: 768px) {
+  .btn {
+    background-position: center left 40px;
+    background-size: 1.5rem;
+    width: 130px;
+    padding: 10px 10px 10px 20px;
+    font-size: 1rem;
+    margin: 0 5px;
+  }
 }
 </style>
