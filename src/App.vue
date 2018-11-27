@@ -2,10 +2,14 @@
   <div id="app">
     <h1>systemnytt</h1>
     <div id="nav">
-      <RouterLink to="/">
+      <RouterLink
+        class="btn btn__beer"
+        to="/">
         Öl
-      </RouterLink> |
-      <RouterLink to="/wines">
+      </RouterLink>
+      <RouterLink
+        class="btn btn__wine"
+        to="/wines">
         Vin
       </RouterLink>
     </div>
@@ -35,8 +39,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   height: 100%;
-  color: #2c3e50;
+  color: #505050;
   text-align: center;
-  padding: 2rem 0;
+}
+
+.btn {
+  background-repeat: no-repeat;
+  background-position: center left 50px;
+  background-size: 2rem;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #ADCAD6;
+  text-decoration: none;
+  border: none;
+  color: #505050;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 10px 10px 10px 30px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn__beer {
+  background-image: url('./assets/beer.svg');
+  background-size: 2.5rem;
+}
+
+.btn__wine {
+  background-image: url('./assets/wine.svg');
 }
 </style>

@@ -18,7 +18,8 @@
       <tbody>
         <tr
           v-for="beverage of beverages"
-          :key="beverage.id">
+          :key="beverage.id"
+          class="beverage-row">
           <td class="beverage-icon">
             <span class="beverage-icon__helper" />
             <img
@@ -91,7 +92,7 @@ h2 {
 
 .beverages {
   max-width: 768px;
-  margin: 0 auto;
+  margin: 2rem auto;
   background-color: #fff;
   border: 1px solid #f1f1f1;
   -webkit-box-shadow: 3px 3px 10px 5px #e7e7e7;
@@ -105,8 +106,8 @@ h2 {
   table-layout: fixed;
 }
 
-tr {
-  border-bottom: 1px solid #f1f1f1;
+.beverage-row {
+  border-top: 1px solid #f1f1f1;
 }
 
 th, td {
@@ -150,7 +151,7 @@ th {
 
 @media (min-width: 768px) {
   th, td {
-    padding: 0.5rem;
+    padding: 0.25rem;
   }
   .beverage-attribute__price {
     padding-right: 1rem;
