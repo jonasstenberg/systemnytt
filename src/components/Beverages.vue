@@ -37,10 +37,13 @@
     </table>
   </div>
   <div
-    v-else-if="loading">
+    v-else-if="loading"
+    class="beverages beverages__info">
     Laddar...
   </div>
-  <div v-else>
+  <div
+    v-else
+    class="beverages beverages__info">
     Inga releaser den här veckan.
   </div>
 </template>
@@ -98,6 +101,10 @@ h2 {
   -webkit-box-shadow: 3px 3px 10px 5px #e7e7e7;
   -moz-box-shadow: 3px 3px 10px 5px #e7e7e7;
   box-shadow: 3px 3px 10px 5px #e7e7e7;
+}
+
+.beverages__info {
+  padding: 1rem;
 }
 
 .beverages__list {
