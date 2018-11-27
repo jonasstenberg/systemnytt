@@ -36,7 +36,6 @@ body {
   font-size: 16px;
   height: 100%;
   color: #2c3e50;
-  overflow-x: hidden;
   text-align: center;
   padding: 2rem 0;
 }
