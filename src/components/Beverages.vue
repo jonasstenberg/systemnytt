@@ -35,8 +35,12 @@
             <span class="beverage__attribute">{{ beverage.producer }}</span>
           </p>
           <p>
-            <span class="beverage__attribute beverage__attribute--bold">Volym (ml): </span>
-            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }}</span>
+            <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
+            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
+          </p>
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Alkoholhalt: </span>
+            <span class="beverage__attribute">{{ beverage.alcohol }}</span>
           </p>
           <p v-if="beverage.year">
             <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
@@ -46,6 +50,18 @@
           <p v-if="beverage.style">
             <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
             <span class="beverage__attribute">{{ beverage.style }}</span>
+          </p>
+
+          <p v-if="beverage.provider">
+            <span class="beverage__attribute beverage__attribute--bold">Leverantör: </span>
+            <span class="beverage__attribute">{{ beverage.provider }}</span>
+          </p>
+
+          <p v-if="beverage.price_per_liter">
+            <span class="beverage__attribute beverage__attribute--bold">
+              Kr/l - jämförelsepris:
+            </span>
+            <span class="beverage__attribute">{{ beverage.price_per_liter }}</span>
           </p>
         </div>
       </accordion-item>
