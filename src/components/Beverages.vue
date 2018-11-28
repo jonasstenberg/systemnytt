@@ -2,44 +2,44 @@
   <div
     v-if="beverages.length > 0"
     class="beverages">
-        <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
-      <accordion>
-        <accordion-item
-          v-for="beverage of beverages"
-          :key="beverage.id">
-          <div
-            slot="title"
-            class="beverage__title">
-            <span class="beverage__icon">
-              <img
-                :src="iconUrl(beverage.packaging)">
-            </span>
-            <span class="beverage__attribute beverage__attribute--name">
-              {{ beverage.name }} {{ beverage.additional_name }} ({{ beverage.alcohol }})
-            </span>
-            <span class="beverage__attribute beverage__attribute--price">
-              {{ beverage.price.amount.toFixed(2) }}
-            </span>
-          </div>
-          <div
-            slot="more-info"
-            class="beverage__more-info">
-            <p>
-              <span class="beverage__attribute beverage__attribute--bold">Producent: </span>
-              <span class="beverage__attribute">{{ beverage.producer }}</span>
-            </p>
-            <p>
-              <span class="beverage__attribute beverage__attribute--bold">Volym (ml): </span>
-              <span class="beverage__attribute">{{ beverage.volume_in_milliliter }}</span>
-            </p>
-            <p v-if="beverage.year">
-              <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
-              <span class="beverage__attribute">{{ beverage.year }}</span>
-            </p>
-          </div>
-        </accordion-item>
-      </accordion>
-    </div>
+    <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
+    <accordion>
+      <accordion-item
+        v-for="beverage of beverages"
+        :key="beverage.id">
+        <div
+          slot="title"
+          class="beverage__title">
+          <span class="beverage__icon">
+            <img
+              :src="iconUrl(beverage.packaging)">
+          </span>
+          <span class="beverage__attribute beverage__attribute--name">
+            {{ beverage.name }} {{ beverage.additional_name }} ({{ beverage.alcohol }})
+          </span>
+          <span class="beverage__attribute beverage__attribute--price">
+            {{ beverage.price.amount.toFixed(2) }}
+          </span>
+        </div>
+        <div
+          slot="more-info"
+          class="beverage__more-info">
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Producent: </span>
+            <span class="beverage__attribute">{{ beverage.producer }}</span>
+          </p>
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Volym (ml): </span>
+            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }}</span>
+          </p>
+          <p v-if="beverage.year">
+            <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
+            <span class="beverage__attribute">{{ beverage.year }}</span>
+          </p>
+        </div>
+      </accordion-item>
+    </accordion>
+  </div>
   <div
     v-else-if="loading"
     class="beverages beverages__info">

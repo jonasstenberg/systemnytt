@@ -1,5 +1,5 @@
 <template>
-  <Beverages
+  <beverages
     :beverages="wines"
     :loading="loading" />
 </template>

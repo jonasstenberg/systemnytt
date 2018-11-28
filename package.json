@@ -71,7 +71,17 @@
         }
       ],
       "vue/html-closing-bracket-spacing": "error",
-      "vue/require-default-prop": 0
+      "vue/require-default-prop": 0,
+      "vue/component-name-in-template-casing": ["error",
+        "kebab-case",
+        {
+          "ignores": []
+        }
+      ],
+      "vue/singleline-html-element-content-newline": ["error", {
+        "ignoreWhenNoAttributes": true,
+        "ignores": ["span"]
+      }]
     },
     "parserOptions": {
       "parser": "babel-eslint"

@@ -2,20 +2,20 @@
   <main id="app">
     <h1>systemnytt</h1>
     <nav id="nav">
-      <RouterLink
+      <router-link
         class="btn btn__beer"
         to="/"
         tag="button">
         Öl
-      </RouterLink>
-      <RouterLink
+      </router-link>
+      <router-link
         class="btn btn__wine"
         to="/wines"
         tag="button">
         Vin
-      </RouterLink>
+      </router-link>
     </nav>
-    <RouterView />
+    <router-view />
   </main>
 </template>
 
