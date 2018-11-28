@@ -3,15 +3,13 @@
     <h1>systemnytt</h1>
     <nav id="nav">
       <router-link
-        class="btn btn__beer"
-        to="/"
-        tag="button">
+        class="tab tab--beer"
+        to="/">
         Öl
       </router-link>
       <router-link
-        class="btn btn__wine"
-        to="/wines"
-        tag="button">
+        class="tab tab--wine"
+        to="/wines">
         Vin
       </router-link>
     </nav>
@@ -45,7 +43,7 @@ main {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  color: #505050;
+  color: #333;
 }
 
 nav {
@@ -58,7 +56,7 @@ h1 {
   text-align: center;
 }
 
-.btn {
+.tab {
   display: flex;
   border-radius: 4px;
   justify-content: space-around;
@@ -66,28 +64,28 @@ h1 {
   background-color: #03813C;
   border: none;
   color: #fff;
+  text-decoration: none;
   font-size: 1rem;
   padding: 0.5rem 2rem;
-  cursor: pointer;
   margin: 0 0.5rem;
 }
 
-.btn::before {
+.tab::before {
   content: '';
   width: 2rem;
   height: 2rem;
 }
 
-.btn__beer::before {
+.tab--beer::before {
   background-image: url('./assets/beer.svg');
 }
 
-.btn__wine::before {
+.tab--wine::before {
   background-image: url('./assets/wine.svg');
 }
 
 @media (min-width: 768px) {
-  .btn {
+  .tab {
     font-size: 1.5rem;
     margin: 0.5rem;
   }
