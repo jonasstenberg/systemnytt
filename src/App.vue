@@ -26,7 +26,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100%;
   overflow-x: hidden;
   background-color: #eee;
@@ -43,7 +42,7 @@ body {
 }
 
 main {
-  height: 100%;
+  flex: 1;
 }
 
 nav {
@@ -84,9 +83,10 @@ h1 {
   background-image: url('./assets/wine.svg');
 }
 
+
 footer {
-  flex-shrink: 0;
-  padding: 1rem;
+  flex: none;
+  padding: 0 1rem;
   text-align: center;
 }
 
