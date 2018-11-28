@@ -2,36 +2,44 @@
   <div
     v-if="beverages.length > 0"
     class="beverages">
-    <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
-    <div class="beverages__list">
-      <Accordion>
-        <AccordionItem
+        <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
+      <accordion>
+        <accordion-item
           v-for="beverage of beverages"
           :key="beverage.id">
           <div
             slot="title"
-            class="beverages__title">
-            <span class="beverage-icon">
+            class="beverage__title">
+            <span class="beverage__icon">
               <img
-                class="beverage-icon__image"
                 :src="iconUrl(beverage.packaging)">
             </span>
-            <span class="beverage-attribute__name">
+            <span class="beverage__attribute beverage__attribute--name">
               {{ beverage.name }} {{ beverage.additional_name }} ({{ beverage.alcohol }})
             </span>
-            <span class="beverage-attribute__price">
+            <span class="beverage__attribute beverage__attribute--price">
               {{ beverage.price.amount.toFixed(2) }}
             </span>
           </div>
           <div
             slot="more-info"
-            class="beverages__more-info">
-            More info
+            class="beverage__more-info">
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">Producent: </span>
+              <span class="beverage__attribute">{{ beverage.producer }}</span>
+            </p>
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">Volym (ml): </span>
+              <span class="beverage__attribute">{{ beverage.volume_in_milliliter }}</span>
+            </p>
+            <p v-if="beverage.year">
+              <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
+              <span class="beverage__attribute">{{ beverage.year }}</span>
+            </p>
           </div>
-        </AccordionItem>
-      </Accordion>
+        </accordion-item>
+      </accordion>
     </div>
-  </div>
   <div
     v-else-if="loading"
     class="beverages beverages__info">
@@ -93,51 +101,51 @@ export default {
 h2 {
   font-size: 1.5rem;
   font-weight: normal;
+  text-align: center;
 }
 
 .beverages {
   max-width: 768px;
+  padding: 0 1rem;
   margin: 2rem auto;
   background-color: #fff;
   border: 1px solid #f1f1f1;
   box-shadow: 3px 3px 10px 5px #e7e7e7;
+  text-align: left;
 }
 
 .beverages__info {
   padding: 1rem;
 }
 
-.beverages__list {
-  text-align: left;
-}
-
-.beverages__title {
+.beverage__title {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
-.beverage-icon img {
+.beverage__more-info {
+  padding: 1rem;
+}
+
+.beverage__icon {
   flex-shrink: 0;
   width: 3rem;
   height: 3rem;
 }
 
-.beverage-attribute__price {
-  flex-shrink: 0;
-  margin-left: auto;
-  margin-right: 1rem;
-  min-width: 4rem;
-  text-align: right;
+.beverage__attribute--bold {
+  font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  .beverages {
-    margin: 1rem auto;
-  }
+.beverage__attribute--name {
+  flex: auto;
+}
 
-  .beverage-attribute__price {
-    margin-right: 0;
-  }
+.beverage__attribute--price {
+  flex-shrink: 0;
+  margin-left: 1rem;
+  text-align: right;
 }
 </style>

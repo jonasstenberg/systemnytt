@@ -1,32 +1,35 @@
 <template>
-  <div id="app">
+  <main id="app">
     <h1>systemnytt</h1>
-    <div id="nav">
+    <nav id="nav">
       <RouterLink
         class="btn btn__beer"
-        to="/">
+        to="/"
+        tag="button">
         Öl
       </RouterLink>
       <RouterLink
         class="btn btn__wine"
-        to="/wines">
+        to="/wines"
+        tag="button">
         Vin
       </RouterLink>
-    </div>
+    </nav>
     <RouterView />
-  </div>
+  </main>
 </template>
 
 <style>
 html {
   height: 100%;
+  font-size: 16px;
 }
 
 body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: 100%;
-  font-size: 16px;
   overflow-x: hidden;
   background-color: #eee;
   background-image: url('./assets/background.png');
@@ -37,51 +40,56 @@ body {
     outline: none;
 }
 
-#app {
+main {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
   height: 100%;
   color: #505050;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
   text-align: center;
 }
 
 .btn {
-  background-repeat: no-repeat;
-  background-position: center left 50px;
-  background-size: 2rem;
-  display: inline-block;
+  display: flex;
   border-radius: 4px;
-  background-color: #ADCAD6;
-  text-decoration: none;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #03813C;
   border: none;
-  color: #505050;
-  text-align: center;
-  font-size: 1.5rem;
-  padding: 10px 10px 10px 30px;
-  width: 150px;
-  transition: all 0.5s;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
   cursor: pointer;
-  margin: 5px;
+  margin: 0 0.5rem;
 }
 
-.btn__beer {
+.btn::before {
+  content: '';
+  width: 2rem;
+  height: 2rem;
+}
+
+.btn__beer::before {
   background-image: url('./assets/beer.svg');
 }
 
-.btn__wine {
+.btn__wine::before {
   background-image: url('./assets/wine.svg');
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .btn {
-    background-position: center left 40px;
-    background-size: 1.5rem;
-    width: 130px;
-    padding: 10px 10px 10px 20px;
-    font-size: 1rem;
-    margin: 0 5px;
+    font-size: 1.5rem;
+    margin: 0.5rem;
   }
 }
 </style>

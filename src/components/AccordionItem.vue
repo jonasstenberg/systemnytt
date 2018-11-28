@@ -64,7 +64,7 @@ export default {
 }
 
 .accordion-item__content {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .accordion-item__header::before,
