@@ -57,37 +57,17 @@ export default {
 .accordion-item__header {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 0;
   margin: 0;
   font-weight: normal;
   cursor: pointer;
 }
 
+.accordion-item__header:hover {
+  background: #f2f2f2;
+}
+
 .accordion-item__content {
   padding-bottom: 1rem;
-}
-
-.accordion-item__header::before,
-.accordion-item--active .accordion-item__header::after {
-  width: 1.5rem;
-  height: 1.5rem;
-  content: '';
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 1.5rem;
-}
-
-.accordion-item__header::before {
-  margin-right: 0.5rem;
-  background-image: url("../assets/plus.svg");
-  transition: transform 0.25s ease;
-}
-
-.accordion-item--expanded .accordion-item__header::before {
-  transform: rotate(45deg);
-}
-
-.accordion-item--active:not(.accordion-item--expanded) .accordion-item__header {
-  background: red;
 }
 </style>
