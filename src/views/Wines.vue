@@ -36,7 +36,13 @@ export default {
           sales_start_to: getEndDate(),
         },
       });
-      this.wines = response.data;
+      this.wines = response.data.map((b) => {
+        const res = {
+          title: `${b.name} ${b.additional_name} (${b.year})`,
+        };
+
+        return Object.assign({}, b, res);
+      });
       this.loading = false;
     } catch (err) {
       console.log(err);

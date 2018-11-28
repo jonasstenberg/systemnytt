@@ -2,7 +2,7 @@
   <div
     v-if="beverages.length > 0"
     class="beverages">
-    <h2>Nästa release på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
+    <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <accordion>
       <accordion-item
         v-for="beverage of beverages"
@@ -15,7 +15,7 @@
               :src="iconUrl(beverage.packaging)">
           </span>
           <span class="beverage__attribute beverage__attribute--name">
-            {{ beverage.name }} {{ beverage.additional_name }} ({{ beverage.alcohol }})
+            {{ beverage.title }}
           </span>
           <span class="beverage__attribute beverage__attribute--price">
             {{ beverage.price.amount.toFixed(2) }}
@@ -42,6 +42,11 @@
             <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
             <span class="beverage__attribute">{{ beverage.year }}</span>
           </p>
+
+          <p v-if="beverage.style">
+            <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
+            <span class="beverage__attribute">{{ beverage.style }}</span>
+          </p>
         </div>
       </accordion-item>
     </accordion>
@@ -54,7 +59,7 @@
   <div
     v-else
     class="beverages beverages__info">
-    Inga releaser den här veckan.
+    Inga släpp den här veckan.
   </div>
 </template>
 
