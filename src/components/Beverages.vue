@@ -29,6 +29,10 @@
             <span class="beverage__attribute">{{ beverage.product_group }}</span>
           </p>
           <p>
+            <span class="beverage__attribute beverage__attribute--bold">Säljstart: </span>
+            <span class="beverage__attribute">{{ beverage.sales_start }}</span>
+          </p>
+          <p>
             <span class="beverage__attribute beverage__attribute--bold">
               {{ beverage.product_group === 'Öl' ? 'Bryggeri' : 'Producent' }}:
             </span>
