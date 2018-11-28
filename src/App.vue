@@ -32,6 +32,10 @@ body {
   background-color: #eee;
   background-image: url('./assets/background.png');
   margin: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
 }
 
 *:focus {
@@ -39,11 +43,7 @@ body {
 }
 
 main {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  color: #333;
 }
 
 nav {
@@ -82,6 +82,16 @@ h1 {
 
 .tab--wine::before {
   background-image: url('./assets/wine.svg');
+}
+
+footer {
+  flex-shrink: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+footer a {
+  color: #333;
 }
 
 @media (min-width: 768px) {
