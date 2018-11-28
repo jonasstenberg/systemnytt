@@ -1,19 +1,29 @@
 <template>
   <main id="app">
-    <h1>systemnytt</h1>
-    <nav id="nav">
-      <router-link
-        class="tab tab--beer"
-        to="/">
-        Öl
-      </router-link>
-      <router-link
-        class="tab tab--wine"
-        to="/wines">
-        Vin
-      </router-link>
-    </nav>
-    <router-view />
+    <div class="content">
+      <h1>systemnytt</h1>
+      <nav id="nav">
+        <router-link
+          class="tab tab--beer"
+          to="/">
+          Öl
+        </router-link>
+        <router-link
+          class="tab tab--wine"
+          to="/wines">
+          Vin
+        </router-link>
+      </nav>
+      <router-view />
+    </div>
+    <footer>
+      <p class="footer__paragraph">
+        systemnytt.se är skapad av Jonas Stenberg och Martin Wendt.
+      </p>
+      <p class="footer__paragraph">
+        Projectet är open source och finns att hitta på <a href="https://www.github.com/jonasstenberg/systemnytt/">GitHub</a>.
+      </p>
+    </footer>
   </main>
 </template>
 
@@ -39,6 +49,8 @@ body {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -50,6 +62,22 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.footer__paragraph {
+  display: block;
 }
 
 h1 {

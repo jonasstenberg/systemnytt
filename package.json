@@ -80,7 +80,7 @@
       ],
       "vue/singleline-html-element-content-newline": ["error", {
         "ignoreWhenNoAttributes": true,
-        "ignores": ["span"]
+        "ignores": ["span", "a"]
       }]
     },
     "parserOptions": {
