@@ -51,7 +51,7 @@ export default {
   display: flex;
   flex-direction: column;
   list-style: none;
-  border-top: 1px solid var(--color-gray);
+  border-top: 1px solid #f1f1f1;
 }
 
 .accordion-item__header {
