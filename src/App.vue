@@ -5,17 +5,48 @@
       <router-link
         class="tab tab--beer"
         to="/">
-        Öl
+        Öl ({{ beers.length }})
       </router-link>
       <router-link
         class="tab tab--wine"
         to="/wines">
-        Vin
+        Vin ({{ wines.length }})
       </router-link>
     </nav>
     <router-view />
   </main>
 </template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  name: 'Beers',
+
+  computed: {
+    ...mapGetters('beers', [
+      'beers',
+    ]),
+    ...mapGetters('wines', [
+      'wines',
+    ]),
+  },
+
+  created() {
+    this.fetchBeers();
+    this.fetchWines();
+  },
+
+  methods: {
+    ...mapActions('beers', [
+      'fetchBeers',
+    ]),
+    ...mapActions('wines', [
+      'fetchWines',
+    ]),
+  },
+};
+</script>
 
 <style>
 html {
@@ -82,7 +113,6 @@ h1 {
 .tab--wine::before {
   background-image: url('./assets/wine.svg');
 }
-
 
 footer {
   flex: none;

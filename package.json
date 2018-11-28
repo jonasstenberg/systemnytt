@@ -10,7 +10,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",
@@ -72,16 +73,22 @@
       ],
       "vue/html-closing-bracket-spacing": "error",
       "vue/require-default-prop": 0,
-      "vue/component-name-in-template-casing": ["error",
+      "vue/component-name-in-template-casing": [
+        "error",
         "kebab-case",
         {
           "ignores": []
         }
       ],
-      "vue/singleline-html-element-content-newline": ["error", {
-        "ignoreWhenNoAttributes": true,
-        "ignores": ["span"]
-      }]
+      "vue/singleline-html-element-content-newline": [
+        "error",
+        {
+          "ignoreWhenNoAttributes": true,
+          "ignores": [
+            "span"
+          ]
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"

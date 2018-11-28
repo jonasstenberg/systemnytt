@@ -5,10 +5,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 import Beverages from '../components/Beverages.vue';
-import { getStartDate, getEndDate } from '../utils/date';
 
 export default {
   name: 'Wines',
@@ -17,33 +16,11 @@ export default {
     Beverages,
   },
 
-  data() {
-    return {
-      wines: [],
-      loading: false,
-    };
-  },
-
-  async created() {
-    try {
-      this.loading = true;
-      const response = await axios.get('https://bolaget.io/v1/products', {
-        params: {
-          assortment: 'TSE',
-          product_group: 'Vin',
-          limit: 100,
-          sales_start_from: getStartDate(),
-          sales_start_to: getEndDate(),
-        },
-      });
-      this.wines = response.data.map(b => Object.assign({}, b, {
-        title: `${b.name} ${b.additional_name} (${b.year})`,
-      }));
-      this.loading = false;
-    } catch (err) {
-      console.log(err);
-      this.loading = false;
-    }
+  computed: {
+    ...mapGetters('wines', [
+      'wines',
+      'loading',
+    ]),
   },
 };
 </script>
