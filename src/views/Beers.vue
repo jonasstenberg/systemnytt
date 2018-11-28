@@ -36,13 +36,9 @@ export default {
           sales_start_to: getEndDate(),
         },
       });
-      this.beers = response.data.map((b) => {
-        const res = {
-          title: `${b.name} ${b.additional_name} (${b.alcohol})`,
-        };
-
-        return Object.assign({}, b, res);
-      });
+      this.beers = response.data.map(b => Object.assign({}, b, {
+        title: `${b.name} ${b.additional_name} (${b.alcohol})`,
+      }));
       this.loading = false;
     } catch (err) {
       console.log(err);
