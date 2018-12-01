@@ -27,10 +27,18 @@ const actions = {
         sales_start_to: getEndDate(),
       },
     })
-      .then((response) => {
-        commit(types.FETCH_WINES, response.data.map(b => Object.assign({}, b, {
-          title: `${b.name} ${b.additional_name} (${b.year})`,
-        })));
+      .then(({ data }) => {
+        commit(types.FETCH_WINES, data.map((b) => {
+          const title = (name, additionalName, year) => {
+            if (!additionalName) {
+              return `${name} (${year})`;
+            }
+
+            return `${name} ${additionalName} (${year})`;
+          };
+
+          return Object.assign({}, b, { title: title(b.name, b.additional_name, b.year) });
+        }));
       })
       .catch(err => commit(types.FAILURE, err))
       .then(() => commit(types.SET_LOADING, false));

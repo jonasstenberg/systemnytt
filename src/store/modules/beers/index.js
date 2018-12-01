@@ -28,9 +28,17 @@ const actions = {
       },
     })
       .then(({ data }) => {
-        commit(types.FETCH_BEERS, data.map(b => Object.assign({}, b, {
-          title: `${b.name} ${b.additional_name} (${b.alcohol})`,
-        })));
+        commit(types.FETCH_BEERS, data.map((b) => {
+          const title = (name, additionalName, alcohol) => {
+            if (!additionalName) {
+              return `${name} (${alcohol})`;
+            }
+
+            return `${name} ${additionalName} (${alcohol})`;
+          };
+
+          return Object.assign({}, b, { title: title(b.name, b.additional_name, b.alcohol) });
+        }));
       })
       .catch(err => commit(types.FAILURE, err))
       .then(() => commit(types.SET_LOADING, false));
