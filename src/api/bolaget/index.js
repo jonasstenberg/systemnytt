@@ -9,9 +9,10 @@ export default async (productGroup) => {
     beverages.push(...data);
 
     if (data.length >= 100) {
+      console.log(params.params.offset);
       const p = Object.assign({}, params, {
         params: Object.assign({}, params.params, {
-          offset: data.length,
+          offset: params.params.offset ? params.params.offset + data.length : data.length,
         }),
       });
       return getBeverages(p, beverages);
