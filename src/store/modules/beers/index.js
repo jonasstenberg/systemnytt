@@ -1,8 +1,7 @@
 import Vue from 'vue';
-import axios from 'axios';
 
 import * as types from './mutation-types';
-import { getStartDate, getEndDate } from '../../../utils/date';
+import bolaget from '../../../api/bolaget';
 
 const initialState = {
   beers: [],
@@ -15,33 +14,21 @@ const getters = {
 };
 
 const actions = {
-  fetchBeers({ commit }) {
+  async fetchBeers({ commit }) {
     commit(types.SET_LOADING, true);
 
-    axios.get('https://bolaget.io/v1/products', {
-      params: {
-        assortment: 'TSE',
-        product_group: 'Öl',
-        limit: 100,
-        sales_start_from: getStartDate(),
-        sales_start_to: getEndDate(),
-      },
-    })
-      .then(({ data }) => {
-        commit(types.FETCH_BEERS, data.map((b) => {
-          const title = (name, additionalName, alcohol) => {
-            if (!additionalName) {
-              return `${name} (${alcohol})`;
-            }
+    const beers = await bolaget('Öl');
 
-            return `${name} ${additionalName} (${alcohol})`;
-          };
+    commit(types.FETCH_BEERS, beers.map((b) => {
+      let title = '';
+      title += b.name ? `${b.name} ` : '';
+      title += b.additionalName ? `${b.additional_name} ` : '';
+      title += b.alcohol ? `(${b.alcohol})` : '';
 
-          return Object.assign({}, b, { title: title(b.name, b.additional_name, b.alcohol) });
-        }));
-      })
-      .catch(err => commit(types.FAILURE, err))
-      .then(() => commit(types.SET_LOADING, false));
+      return Object.assign({}, b, { title });
+    }));
+
+    commit(types.SET_LOADING, false);
   },
 };
 
