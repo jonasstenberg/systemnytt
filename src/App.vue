@@ -38,6 +38,11 @@ export default {
 html {
   height: 100%;
   font-size: 16px;
+  box-sizing: border-box
+}
+
+*,:after,:before {
+    box-sizing: inherit
 }
 
 body {

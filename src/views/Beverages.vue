@@ -178,7 +178,7 @@ h2 {
 }
 
 .beverages {
-  max-width: 768px;
+  max-width: 799px;
   padding: 0 1rem 1rem;
   margin: 2rem auto;
   background-color: #fff;
