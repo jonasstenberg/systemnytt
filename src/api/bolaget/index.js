@@ -9,7 +9,6 @@ export default async (productGroup) => {
     beverages.push(...data);
 
     if (data.length >= 100) {
-      console.log(params.params.offset);
       const p = Object.assign({}, params, {
         params: Object.assign({}, params.params, {
           offset: params.params.offset ? params.params.offset + data.length : data.length,
@@ -24,12 +23,34 @@ export default async (productGroup) => {
   const params = {
     params: {
       assortment: 'TSE',
-      product_group: productGroup,
       limit: 100,
+      product_group: productGroup, // Remove this line when grouping and doing dynamic routing
       sales_start_from: getStartDate(),
       sales_start_to: getEndDate(),
     },
   };
 
-  return getBeverages(params);
+  const beverages = await getBeverages(params);
+
+  const groupByArray = (xs, key) => xs.reduce((rv, x) => {
+    const v = key instanceof Function ? key(x) : x[key];
+    const el = rv.find(r => r && r.key === v);
+
+    if (el) {
+      el.values.push(x);
+    } else {
+      rv.push({
+        key: v,
+        values: [x],
+      });
+    }
+    return rv;
+  }, []);
+
+  const groupedResponse = groupByArray(beverages, 'product_group')
+    .sort((a, b) => b.values.length - a.values.length);
+
+  console.log(groupedResponse);
+
+  return beverages;
 };
