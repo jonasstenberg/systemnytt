@@ -4,12 +4,14 @@ import * as types from './mutation-types';
 import bolaget from '../../../api/bolaget';
 
 const initialState = {
-  beverages: [],
+  beverages: {},
+  menuItems: [],
   loading: false,
 };
 
 const getters = {
   beverages: state => state.beverages,
+  menuItems: state => state.menuItems,
   loading: state => state.loading,
 };
 
@@ -17,10 +19,32 @@ const actions = {
   async fetchBeverages({ commit }) {
     commit(types.SET_LOADING, true);
 
-    const beverages = await bolaget();
+    const result = await bolaget();
 
-    commit(types.FETCH_BEVERAGES, beverages);
+    const groupBy = (xs, key) => xs.reduce((rv, x) => {
+      (rv[x[key]] = rv[x[key]] || []).push(x); // eslint-disable-line
+      return rv;
+    }, {});
 
+    const groupedResult = groupBy(result, 'product_group');
+
+    Object.keys(groupedResult).forEach((key) => {
+      groupedResult[key] = groupedResult[key].map((beverage) => {
+        let title = '';
+        title += beverage.name ? `${beverage.name} ` : '';
+        title += beverage.additional_name ? `${beverage.additional_name} ` : '';
+        title += beverage.alcohol ? `(${beverage.alcohol}) ` : '';
+        title += beverage.year ? `(${beverage.year}) ` : '';
+        return Object.assign({}, beverage, { title });
+      });
+    });
+
+    const menuItems = Object.keys(groupedResult)
+      .map(beverage => ({ key: beverage, len: groupedResult[beverage].length }))
+      .sort((a, b) => b.len - a.len);
+
+    commit(types.FETCH_BEVERAGES, groupedResult);
+    commit(types.SET_MENU_ITEMS, menuItems);
     commit(types.SET_LOADING, false);
   },
 };
@@ -32,6 +56,10 @@ const mutations = {
 
   [types.FETCH_BEVERAGES](state, beverages) {
     Vue.set(state, 'beverages', beverages);
+  },
+
+  [types.SET_MENU_ITEMS](state, menuItems) {
+    Vue.set(state, 'menuItems', menuItems);
   },
 
   [types.FAILURE](state, err) {

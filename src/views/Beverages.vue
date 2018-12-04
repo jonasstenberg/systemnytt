@@ -7,7 +7,7 @@
     <accordion>
       <accordion-item
         v-for="beverage in getBeverages()"
-        :key="beverage.id">
+        :key="beverage.nr">
         <div
           slot="title"
           class="beverage__title">
@@ -16,7 +16,7 @@
               :src="iconUrl(beverage.packaging)">
           </span>
           <span class="beverage__attribute beverage__attribute--name">
-            {{ beverage.name }} {{ beverage.additional_name }}
+            {{ beverage.title }}
           </span>
           <span class="beverage__attribute beverage__attribute--price">
             {{ beverage.price.amount.toFixed(2) }}
@@ -102,6 +102,7 @@ export default {
 
   computed: {
     ...mapGetters('beverages', [
+      'menuItems',
       'beverages',
       'loading',
     ]),
@@ -122,21 +123,21 @@ export default {
     },
 
     nextRelease() {
-      return this.beverages[0].values[0].sales_start;
+      return this.beverages[this.menuItems[0].key][0].sales_start;
     },
 
     getBeverages() {
       if (this.$route.params.beverageType) {
-        return this.beverages.find(b => b.key === this.$route.params.beverageType).values;
+        return this.beverages[this.$route.params.beverageType];
       }
-      return this.beverages[0].values;
+      return this.beverages[this.menuItems[0].key];
     },
 
     getBeverageType() {
       if (this.$route.params.beverageType) {
-        return this.$route.params.beverageType || this.beverages[0].key;
+        return this.$route.params.beverageType;
       }
-      return this.beverages[0].key;
+      return this.menuItems[0].key;
     },
   },
 };

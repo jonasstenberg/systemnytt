@@ -2,7 +2,7 @@
   <main id="app">
     <h1>systemnytt</h1>
     <navigation
-      :items="beverages" />
+      :items="menuItems" />
     <router-view />
   </main>
 </template>
@@ -18,7 +18,7 @@ export default {
 
   computed: {
     ...mapGetters('beverages', [
-      'beverages',
+      'menuItems',
     ]),
   },
 

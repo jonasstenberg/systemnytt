@@ -5,7 +5,7 @@
       :key="item.key"
       class="navigation__link"
       :to="`/${item.key}`">
-      {{ item.key }} ({{ item.values.length }})
+      {{ item.key }} ({{ item.len }})
     </router-link>
   </nav>
 </template>
