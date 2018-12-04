@@ -1,6 +1,6 @@
 <template>
   <beverages
-    :beverages="beers"
+    :beverages="beverages"
     :loading="loading" />
 </template>
 
@@ -10,15 +10,13 @@ import { mapGetters } from 'vuex';
 import Beverages from '../components/Beverages.vue';
 
 export default {
-  name: 'Beers',
-
   components: {
     Beverages,
   },
 
   computed: {
-    ...mapGetters('beers', [
-      'beers',
+    ...mapGetters('beverages', [
+      'beverages',
       'loading',
     ]),
   },

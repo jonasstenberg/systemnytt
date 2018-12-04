@@ -5,7 +5,7 @@
     <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <accordion>
       <accordion-item
-        v-for="beverage of beverages"
+        v-for="beverage in beverages.find(b => b.key === $route.params.beverageType).values"
         :key="beverage.id">
         <div
           slot="title"
@@ -15,7 +15,7 @@
               :src="iconUrl(beverage.packaging)">
           </span>
           <span class="beverage__attribute beverage__attribute--name">
-            {{ beverage.title }}
+            {{ beverage.name }} {{ beverage.additional_name }}
           </span>
           <span class="beverage__attribute beverage__attribute--price">
             {{ beverage.price.amount.toFixed(2) }}
@@ -90,8 +90,6 @@ import Accordion from './Accordion.vue';
 import AccordionItem from './AccordionItem.vue';
 
 export default {
-  name: 'Beverages',
-
   components: {
     Accordion,
     AccordionItem,

@@ -3,14 +3,11 @@
     <h1>systemnytt</h1>
     <nav id="nav">
       <router-link
-        class="tab tab--beer"
-        to="/">
-        Öl ({{ beers.length }})
-      </router-link>
-      <router-link
-        class="tab tab--wine"
-        to="/wines">
-        Vin ({{ wines.length }})
+        v-for="beverage in beverages"
+        :key="beverage.key"
+        class="tab tab--beer  "
+        :to="`/${beverage.key}`">
+        {{ beverage.key }} ({{ beverage.values.length }})
       </router-link>
     </nav>
     <router-view />
@@ -21,28 +18,19 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'Beers',
-
   computed: {
-    ...mapGetters('beers', [
-      'beers',
-    ]),
-    ...mapGetters('wines', [
-      'wines',
+    ...mapGetters('beverages', [
+      'beverages',
     ]),
   },
 
   created() {
-    this.fetchBeers();
-    this.fetchWines();
+    this.fetchBeverages();
   },
 
   methods: {
-    ...mapActions('beers', [
-      'fetchBeers',
-    ]),
-    ...mapActions('wines', [
-      'fetchWines',
+    ...mapActions('beverages', [
+      'fetchBeverages',
     ]),
   },
 };

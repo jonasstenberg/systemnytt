@@ -4,29 +4,22 @@ import * as types from './mutation-types';
 import bolaget from '../../../api/bolaget';
 
 const initialState = {
-  beers: [],
+  beverages: [],
   loading: false,
 };
 
 const getters = {
-  beers: state => state.beers,
+  beverages: state => state.beverages,
   loading: state => state.loading,
 };
 
 const actions = {
-  async fetchBeers({ commit }) {
+  async fetchBeverages({ commit }) {
     commit(types.SET_LOADING, true);
 
-    const beers = await bolaget('Öl');
+    const beverages = await bolaget();
 
-    commit(types.FETCH_BEERS, beers.map((b) => {
-      let title = '';
-      title += b.name ? `${b.name} ` : '';
-      title += b.additionalName ? `${b.additional_name} ` : '';
-      title += b.alcohol ? `(${b.alcohol})` : '';
-
-      return Object.assign({}, b, { title });
-    }));
+    commit(types.FETCH_BEVERAGES, beverages);
 
     commit(types.SET_LOADING, false);
   },
@@ -37,8 +30,8 @@ const mutations = {
     Vue.set(state, 'loading', loading);
   },
 
-  [types.FETCH_BEERS](state, beers) {
-    Vue.set(state, 'beers', beers);
+  [types.FETCH_BEVERAGES](state, beverages) {
+    Vue.set(state, 'beverages', beverages);
   },
 
   [types.FAILURE](state, err) {

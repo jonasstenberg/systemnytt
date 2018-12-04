@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { getStartDate, getEndDate } from '../../utils/date';
 
-export default async (productGroup) => {
+export default async () => {
   const getBeverages = async (params, beverages = []) => {
     const { data } = await axios.get('https://bolaget.io/v1/products', params);
 
@@ -24,7 +24,6 @@ export default async (productGroup) => {
     params: {
       assortment: 'TSE',
       limit: 100,
-      product_group: productGroup, // Remove this line when grouping and doing dynamic routing
       sales_start_from: getStartDate(),
       sales_start_to: getEndDate(),
     },
@@ -48,9 +47,10 @@ export default async (productGroup) => {
   }, []);
 
   const groupedResponse = groupByArray(beverages, 'product_group')
+    .map(beverage => Object.assign({}, beverage, ({ slugName: beverage.key })))
     .sort((a, b) => b.values.length - a.values.length);
 
   console.log(groupedResponse);
 
-  return beverages;
+  return groupedResponse;
 };
