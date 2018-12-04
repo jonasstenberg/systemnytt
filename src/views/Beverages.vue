@@ -2,7 +2,7 @@
   <div
     v-if="showBeverages"
     class="beverages">
-    <h1>{{ getBeverageType() }}</h1>
+    <h1>{{ getProductGroup() }}</h1>
     <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <accordion>
       <accordion-item
@@ -25,36 +25,36 @@
         <div
           slot="more-info"
           class="beverage__more-info">
-          <p v-if="beverage.product_group && beverage.product_group != 'Öl'">
+          <p v-if="beverage.product_group">
             <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
-            <span class="beverage__attribute">{{ beverage.product_group }}</span>
+            <span class="beverage__attribute">{{ beverageType(beverage) }}</span>
           </p>
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Säljstart: </span>
-            <span class="beverage__attribute">{{ beverage.sales_start }}</span>
-          </p>
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">
-              {{ beverage.product_group === 'Öl' ? 'Bryggeri' : 'Producent' }}:
-            </span>
-            <span class="beverage__attribute">{{ beverage.producer }}</span>
-          </p>
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
-            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
-          </p>
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Alkoholhalt: </span>
-            <span class="beverage__attribute">{{ beverage.alcohol }}</span>
-          </p>
+
           <p v-if="beverage.year">
             <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
             <span class="beverage__attribute">{{ beverage.year }}</span>
           </p>
 
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Alkoholhalt: </span>
+            <span class="beverage__attribute">{{ beverage.alcohol }}</span>
+          </p>
+
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
+            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
+          </p>
+
           <p v-if="beverage.style">
-            <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
+            <span class="beverage__attribute beverage__attribute--bold">Stil: </span>
             <span class="beverage__attribute">{{ beverage.style }}</span>
+          </p>
+
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">
+              {{ beverage.product_group === 'Öl' ? 'Bryggeri' : 'Producent' }}:
+            </span>
+            <span class="beverage__attribute">{{ beverage.producer }}</span>
           </p>
 
           <p v-if="beverage.provider">
@@ -67,6 +67,18 @@
               Kr/l - jämförelsepris:
             </span>
             <span class="beverage__attribute">{{ beverage.price_per_liter }}</span>
+          </p>
+
+          <p v-if="beverage.sealing">
+            <span class="beverage__attribute beverage__attribute--bold">
+              Förslutning:
+            </span>
+            <span class="beverage__attribute">{{ beverage.sealing }}</span>
+          </p>
+
+          <p>
+            <span class="beverage__attribute beverage__attribute--bold">Säljstart: </span>
+            <span class="beverage__attribute">{{ beverage.sales_start }}</span>
           </p>
         </div>
       </accordion-item>
@@ -127,17 +139,32 @@ export default {
     },
 
     getBeverages() {
-      if (this.$route.params.beverageType) {
-        return this.beverages[this.$route.params.beverageType];
+      if (this.$route.params.productGroup) {
+        return this.beverages[this.$route.params.productGroup];
       }
       return this.beverages[this.menuItems[0].key];
     },
 
-    getBeverageType() {
-      if (this.$route.params.beverageType) {
-        return this.$route.params.beverageType;
+    getProductGroup() {
+      if (this.$route.params.productGroup) {
+        return this.$route.params.productGroup;
       }
       return this.menuItems[0].key;
+    },
+
+    beverageType(beverage) {
+      let type = '';
+      if (beverage.product_group) {
+        if (beverage.type) {
+          type += `${beverage.product_group}, `;
+          type += beverage.type;
+        } else {
+          type += beverage.product_group;
+        }
+      } else {
+        type += beverage.type ? beverage.type : '';
+      }
+      return type;
     },
   },
 };

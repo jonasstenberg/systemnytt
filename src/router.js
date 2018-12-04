@@ -15,7 +15,7 @@ export default new Router({
       component: Beverages,
     },
     {
-      path: '/:beverageType',
+      path: '/:productGroup',
       name: 'beverages',
       component: Beverages,
     },
