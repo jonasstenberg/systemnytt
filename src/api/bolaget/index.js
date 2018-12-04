@@ -50,7 +50,5 @@ export default async () => {
     .map(beverage => Object.assign({}, beverage, ({ slugName: beverage.key })))
     .sort((a, b) => b.values.length - a.values.length);
 
-  console.log(groupedResponse);
-
   return groupedResponse;
 };

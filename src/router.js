@@ -9,6 +9,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/',
+      name: 'root',
+      component: Beverages,
+    },
+    {
       path: '/:beverageType',
       name: 'beverages',
       component: Beverages,

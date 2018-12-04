@@ -24,8 +24,8 @@ export default {
     ]),
   },
 
-  created() {
-    this.fetchBeverages();
+  async created() {
+    await this.fetchBeverages();
   },
 
   methods: {

@@ -1,11 +1,12 @@
 <template>
   <div
-    v-if="beverages.length > 0"
+    v-if="showBeverages"
     class="beverages">
+    <h1>{{ getBeverageType() }}</h1>
     <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <accordion>
       <accordion-item
-        v-for="beverage in beverages.find(b => b.key === $route.params.beverageType).values"
+        v-for="beverage in getBeverages()"
         :key="beverage.id">
         <div
           slot="title"
@@ -71,15 +72,17 @@
       </accordion-item>
     </accordion>
   </div>
-  <div
-    v-else-if="loading"
-    class="beverages beverages__info">
-    Laddar...
-  </div>
-  <div
-    v-else
-    class="beverages beverages__info">
-    Inga släpp den här veckan.
+  <div v-else>
+    <div
+      v-if="loading"
+      class="beverages beverages__info">
+      Laddar...
+    </div>
+    <div
+      v-else
+      class="beverages beverages__info">
+      Inga släpp den här veckan.
+    </div>
   </div>
 </template>
 
@@ -102,6 +105,10 @@ export default {
       'beverages',
       'loading',
     ]),
+
+    showBeverages() {
+      return this.beverages && !this.loading;
+    },
   },
 
   methods: {
@@ -115,11 +122,21 @@ export default {
     },
 
     nextRelease() {
-      if (this.beverages && this.beverages[0].values[0]) {
-        return this.beverages[0].values[0].sales_start;
-      }
+      return this.beverages[0].values[0].sales_start;
+    },
 
-      return '';
+    getBeverages() {
+      if (this.$route.params.beverageType) {
+        return this.beverages.find(b => b.key === this.$route.params.beverageType).values;
+      }
+      return this.beverages[0].values;
+    },
+
+    getBeverageType() {
+      if (this.$route.params.beverageType) {
+        return this.$route.params.beverageType || this.beverages[0].key;
+      }
+      return this.beverages[0].key;
     },
   },
 };
