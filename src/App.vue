@@ -1,23 +1,21 @@
 <template>
   <main id="app">
     <h1>systemnytt</h1>
-    <nav id="nav">
-      <router-link
-        v-for="beverage in beverages"
-        :key="beverage.key"
-        class="tab tab--beer  "
-        :to="`/${beverage.key}`">
-        {{ beverage.key }} ({{ beverage.values.length }})
-      </router-link>
-    </nav>
+    <navigation
+      :items="beverages" />
     <router-view />
   </main>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import Navigation from './components/Navigation.vue';
 
 export default {
+  components: {
+    Navigation,
+  },
+
   computed: {
     ...mapGetters('beverages', [
       'beverages',
@@ -64,42 +62,8 @@ main {
   flex: 1;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 h1 {
   text-align: center;
-}
-
-.tab {
-  display: flex;
-  border-radius: 4px;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #03813C;
-  border: none;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  padding: 0.5rem 2rem;
-  margin: 0 0.5rem;
-}
-
-.tab::before {
-  content: '';
-  width: 2rem;
-  height: 2rem;
-}
-
-.tab--beer::before {
-  background-image: url('./assets/beer.svg');
-}
-
-.tab--wine::before {
-  background-image: url('./assets/wine.svg');
 }
 
 footer {
@@ -110,12 +74,5 @@ footer {
 
 footer a {
   color: #333;
-}
-
-@media (min-width: 768px) {
-  .tab {
-    font-size: 1.5rem;
-    margin: 0.5rem;
-  }
 }
 </style>
