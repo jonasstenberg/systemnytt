@@ -4,7 +4,7 @@ import Beverages from './views/Beverages.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   linkActiveClass: 'navigation__link--active',
@@ -21,3 +21,11 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  window.ga('set', 'page', to.path);
+  window.ga('send', 'pageview');
+  next();
+});
+
+export default router;
