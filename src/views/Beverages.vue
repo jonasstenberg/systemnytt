@@ -4,7 +4,7 @@
     class="beverages">
     <span class="product-group__star">
       <input
-        v-model="isChecked"
+        :checked="isChecked"
         type="checkbox"
         name="product-grouo__star--checkbox"
         class="product-group__star--checkbox"
