@@ -74,7 +74,9 @@ h1 {
 footer {
   flex: none;
   padding: 0 1rem;
+  margin: 0 auto;
   text-align: center;
+  max-width: 700px;
 }
 
 footer a {

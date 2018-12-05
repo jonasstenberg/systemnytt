@@ -14,7 +14,7 @@
         class="star--label" />
     </span>
     <h1>{{ getProductGroup() }}</h1>
-    <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
+    <p>Nästa släpp sker <b>{{ nextRelease() }}</b>.</p>
     <accordion>
       <accordion-item
         v-for="beverage in getBeverages()"
@@ -256,6 +256,10 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  text-align: left;
+}
+
 h2 {
   font-size: 1.5rem;
   font-weight: normal;
@@ -274,7 +278,7 @@ h2 {
 
 .product-group__star {
   float: right;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
   width: 2rem;
   height: 2rem;
 }
@@ -294,7 +298,7 @@ input[type=checkbox].star--checkbox {
 }
 
 input[type=checkbox].star--checkbox + label.star--label {
-  padding-left: 2rem;
+  width: 2rem;
   height: 2rem;
   display: inline-block;
   background-repeat: no-repeat;
@@ -348,4 +352,3 @@ label.star--label {
   text-align: right;
 }
 </style>
-
