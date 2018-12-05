@@ -2,6 +2,17 @@
   <div
     v-if="showBeverages"
     class="beverages">
+    <span class="product-group__star">
+      <input
+        v-model="isChecked"
+        type="checkbox"
+        name="product-grouo__star--checkbox"
+        class="product-group__star--checkbox"
+        @change="toggle($event)">
+      <label
+        for="product-grouo__star--checkbox"
+        class="product-group__star--label" />
+    </span>
     <h1>{{ getProductGroup() }}</h1>
     <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
     <accordion>
@@ -99,7 +110,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import Can from '../assets/can.svg';
 import Bottle from '../assets/bottle.svg';
@@ -119,12 +130,28 @@ export default {
       'loading',
     ]),
 
+    ...mapGetters('stars', [
+      'starredProductGroup',
+    ]),
+
     showBeverages() {
       return this.beverages && !this.loading;
+    },
+
+    isChecked() {
+      if (this.starredProductGroup
+        && this.starredProductGroup === this.getProductGroup()) {
+        return true;
+      }
+      return false;
     },
   },
 
   methods: {
+    ...mapActions('stars', [
+      'starProductGroup',
+    ]),
+
     iconUrl(packaging) {
       switch (packaging) {
         case 'Burk':
@@ -142,6 +169,11 @@ export default {
       if (this.$route.params.productGroup) {
         return this.beverages[this.$route.params.productGroup];
       }
+
+      if (this.starredProductGroup) {
+        return this.beverages[this.starredProductGroup];
+      }
+
       return this.beverages[this.menuItems[0].key];
     },
 
@@ -149,6 +181,11 @@ export default {
       if (this.$route.params.productGroup) {
         return this.$route.params.productGroup;
       }
+
+      if (this.starredProductGroup) {
+        return this.starredProductGroup;
+      }
+
       return this.menuItems[0].key;
     },
 
@@ -165,6 +202,14 @@ export default {
         type += beverage.type ? beverage.type : '';
       }
       return type;
+    },
+
+    toggle(event) {
+      if (event.target.checked) {
+        this.starProductGroup(this.getProductGroup());
+      } else {
+        this.starProductGroup(null);
+      }
     },
   },
 };
@@ -185,6 +230,43 @@ h2 {
   border: 1px solid #f1f1f1;
   box-shadow: 3px 3px 10px 5px #e7e7e7;
   text-align: left;
+}
+
+.product-group__star {
+  float: right;
+  margin-top: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.product-group__star--label {
+  cursor: pointer;
+}
+
+input[type=checkbox].product-group__star--checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+input[type=checkbox].product-group__star--checkbox + label.product-group__star--label {
+  padding-left: 2rem;
+  height: 2rem;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: auto 100%;
+}
+
+input[type=checkbox].product-group__star--checkbox:checked + label.product-group__star--label {
+  background-image: url('../assets/star_filled.svg');
+}
+
+label.product-group__star--label {
+  background-image: url('../assets/star.svg');
 }
 
 .beverages__info {
