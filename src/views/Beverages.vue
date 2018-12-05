@@ -4,14 +4,14 @@
     class="beverages">
     <span class="product-group__star">
       <input
-        :checked="isChecked"
+        :checked="productGroupIsChecked"
         type="checkbox"
-        name="product-grouo__star--checkbox"
-        class="product-group__star--checkbox"
-        @change="toggle($event)">
+        name="star--checkbox"
+        class="star--checkbox"
+        @change="toggleStarredProductGroup($event.target.checked)">
       <label
-        for="product-grouo__star--checkbox"
-        class="product-group__star--label" />
+        for="star--checkbox"
+        class="star--label" />
     </span>
     <h1>{{ getProductGroup() }}</h1>
     <h2>Nästa släpp på utvalda systembolag sker <b>{{ nextRelease() }}</b></h2>
@@ -24,7 +24,7 @@
           class="beverage__title">
           <span class="beverage__icon">
             <img
-              :src="iconUrl(beverage.packaging)">
+              :src="iconUrl(beverage.packaging, starredBeverages.includes(beverage.nr))">
           </span>
           <span class="beverage__attribute beverage__attribute--name">
             {{ beverage.title }}
@@ -36,6 +36,18 @@
         <div
           slot="more-info"
           class="beverage__more-info">
+          <p class="beverage__star">
+            <input
+              :checked="beverageIsChecked(beverage)"
+              type="checkbox"
+              class="star--checkbox"
+              name="star--checkbox"
+              @change="toggleStarredBeverages(beverage, $event.target.checked)">
+            <label
+              for="star--checkbox"
+              class="star--label" />
+          </p>
+
           <p v-if="beverage.product_group">
             <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
             <span class="beverage__attribute">{{ beverageType(beverage) }}</span>
@@ -114,6 +126,9 @@ import { mapActions, mapGetters } from 'vuex';
 
 import Can from '../assets/can.svg';
 import Bottle from '../assets/bottle.svg';
+import CanFilled from '../assets/can_filled.svg';
+import BottleFilled from '../assets/bottle_filled.svg';
+
 import Accordion from '../components/Accordion.vue';
 import AccordionItem from '../components/AccordionItem.vue';
 
@@ -132,13 +147,14 @@ export default {
 
     ...mapGetters('stars', [
       'starredProductGroup',
+      'starredBeverages',
     ]),
 
     showBeverages() {
       return this.beverages && !this.loading;
     },
 
-    isChecked() {
+    productGroupIsChecked() {
       if (this.starredProductGroup
         && this.starredProductGroup === this.getProductGroup()) {
         return true;
@@ -150,14 +166,15 @@ export default {
   methods: {
     ...mapActions('stars', [
       'starProductGroup',
+      'starBeverages',
     ]),
 
-    iconUrl(packaging) {
+    iconUrl(packaging, filled) {
       switch (packaging) {
         case 'Burk':
-          return Can;
+          return filled ? CanFilled : Can;
         default:
-          return Bottle;
+          return filled ? BottleFilled : Bottle;
       }
     },
 
@@ -204,12 +221,35 @@ export default {
       return type;
     },
 
-    toggle(event) {
-      if (event.target.checked) {
+    toggleStarredProductGroup(checked) {
+      if (checked) {
         this.starProductGroup(this.getProductGroup());
       } else {
         this.starProductGroup(null);
       }
+    },
+
+    toggleStarredBeverages(beverage, checked) {
+      if (checked) {
+        if (!this.starredBeverages.includes(beverage.nr)) {
+          this.starredBeverages.push(beverage.nr);
+        }
+      } else {
+        const index = this.starredBeverages.indexOf(beverage.nr);
+        if (index >= 0) {
+          this.starredBeverages.splice(index, 1);
+        }
+      }
+
+      this.starBeverages(this.starredBeverages);
+    },
+
+    beverageIsChecked(beverage) {
+      if (this.starredBeverages.includes(beverage.nr)) {
+        return true;
+      }
+
+      return false;
     },
   },
 };
@@ -239,11 +279,11 @@ h2 {
   height: 2rem;
 }
 
-.product-group__star--label {
+.star--label {
   cursor: pointer;
 }
 
-input[type=checkbox].product-group__star--checkbox {
+input[type=checkbox].star--checkbox {
   position: absolute;
   opacity: 0;
   width: 2rem;
@@ -253,7 +293,7 @@ input[type=checkbox].product-group__star--checkbox {
   padding: 0;
 }
 
-input[type=checkbox].product-group__star--checkbox + label.product-group__star--label {
+input[type=checkbox].star--checkbox + label.star--label {
   padding-left: 2rem;
   height: 2rem;
   display: inline-block;
@@ -261,11 +301,11 @@ input[type=checkbox].product-group__star--checkbox + label.product-group__star--
   background-position: auto 100%;
 }
 
-input[type=checkbox].product-group__star--checkbox:checked + label.product-group__star--label {
+input[type=checkbox].star--checkbox:checked + label.star--label {
   background-image: url('../assets/star_filled.svg');
 }
 
-label.product-group__star--label {
+label.star--label {
   background-image: url('../assets/star.svg');
 }
 
@@ -288,6 +328,10 @@ label.product-group__star--label {
   flex-shrink: 0;
   width: 3rem;
   height: 3rem;
+}
+
+.beverage__star {
+  float: right;
 }
 
 .beverage__attribute--bold {

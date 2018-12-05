@@ -1,2 +1,3 @@
 export const STAR_PRODUCT_GROUP = 'STAR_PRODUCT_GROUP';
+export const STAR_BEVERAGES = 'STAR_BEVERAGES';
 export const FAILURE = 'FAILURE';
