@@ -53,6 +53,11 @@
             <span class="beverage__attribute">{{ beverageType(beverage) }}</span>
           </p>
 
+          <p v-if="beverage.style">
+            <span class="beverage__attribute beverage__attribute--bold">Stil: </span>
+            <span class="beverage__attribute">{{ beverage.style }}</span>
+          </p>
+
           <p v-if="beverage.year">
             <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
             <span class="beverage__attribute">{{ beverage.year }}</span>
@@ -66,11 +71,6 @@
           <p>
             <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
             <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
-          </p>
-
-          <p v-if="beverage.style">
-            <span class="beverage__attribute beverage__attribute--bold">Stil: </span>
-            <span class="beverage__attribute">{{ beverage.style }}</span>
           </p>
 
           <p>
