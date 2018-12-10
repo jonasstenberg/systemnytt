@@ -15,6 +15,17 @@
     </span>
     <h1>{{ getProductGroup() }}</h1>
     <p>Nästa släpp sker <b>{{ nextRelease() }}</b>.</p>
+    <p>
+      <select
+        @change="sortBySelect($event)">
+        <option
+          v-for="option in sortOptions"
+          :key="option.key"
+          :value="option.key">
+          {{ option.name }}
+        </option>
+      </select>
+    </p>
     <accordion>
       <accordion-item
         v-for="beverage in getBeverages()"
@@ -27,10 +38,10 @@
               :src="iconUrl(beverage.packaging, starredBeverages.includes(beverage.nr))">
           </span>
           <span class="beverage__attribute beverage__attribute--name">
-            {{ beverage.title }}
+            {{ beverage.title }} <b>{{ beverage[sortBy] }}</b>
           </span>
           <span class="beverage__attribute beverage__attribute--price">
-            {{ beverage.price.amount.toFixed(2) }}
+            {{ beverage.price.toFixed(2) }}
           </span>
         </div>
         <div
@@ -132,11 +143,16 @@ import BottleFilled from '../assets/bottle_filled.svg';
 import Accordion from '../components/Accordion.vue';
 import AccordionItem from '../components/AccordionItem.vue';
 
+import sortOptions from '../store/modules/beverages/sort-options';
+import sort from '../mixins/sort';
+
 export default {
   components: {
     Accordion,
     AccordionItem,
   },
+
+  mixins: [sort],
 
   computed: {
     ...mapGetters('beverages', [
@@ -160,6 +176,10 @@ export default {
         return true;
       }
       return false;
+    },
+
+    sortOptions() {
+      return sortOptions;
     },
   },
 

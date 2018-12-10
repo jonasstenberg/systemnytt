@@ -1,16 +1,19 @@
 import Vue from 'vue';
 
 import * as types from './mutation-types';
+import sortOptions from './sort-options';
 import bolaget from '../../../api/bolaget';
 
 const initialState = {
   beverages: {},
+  sortBy: sortOptions[0].key,
   menuItems: [],
   loading: false,
 };
 
 const getters = {
   beverages: state => state.beverages,
+  sortBy: state => state.sortBy,
   menuItems: state => state.menuItems,
   loading: state => state.loading,
 };
@@ -35,7 +38,10 @@ const actions = {
         title += beverage.additional_name ? `${beverage.additional_name} ` : '';
         title += beverage.alcohol ? `(${beverage.alcohol}) ` : '';
         title += beverage.year ? `(${beverage.year}) ` : '';
-        return Object.assign({}, beverage, { title });
+        return Object.assign({}, beverage, {
+          title,
+          price: beverage.price.amount,
+        });
       });
     });
 
@@ -47,6 +53,14 @@ const actions = {
     commit(types.SET_MENU_ITEMS, menuItems);
     commit(types.SET_LOADING, false);
   },
+
+  setBeverages({ commit }, beverages) {
+    commit(types.FETCH_BEVERAGES, beverages);
+  },
+
+  setSortBy({ commit }, sortBy) {
+    commit(types.SET_SORT_BY, sortBy);
+  },
 };
 
 const mutations = {
@@ -56,6 +70,15 @@ const mutations = {
 
   [types.FETCH_BEVERAGES](state, beverages) {
     Vue.set(state, 'beverages', beverages);
+  },
+
+  [types.SET_SORT_BY](state, sortBy) {
+    const matchedOption = sortOptions
+      .find(sortOption => sortOption.key === sortBy);
+
+    if (matchedOption) {
+      Vue.set(state, 'sortBy', matchedOption.key);
+    }
   },
 
   [types.SET_MENU_ITEMS](state, menuItems) {
