@@ -151,7 +151,7 @@ export default {
     ]),
 
     showBeverages() {
-      return this.beverages && !this.loading;
+      return this.beverages && Object.keys(this.beverages).length > 0 && !this.loading;
     },
 
     productGroupIsChecked() {
