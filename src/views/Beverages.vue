@@ -109,7 +109,12 @@
   </div>
   <div v-else>
     <div
-      v-if="loading"
+      v-if="error"
+      class="beverages beverages__info">
+      Något gick fel...
+    </div>
+    <div
+      v-else-if="loading"
       class="beverages beverages__info">
       Laddar...
     </div>
@@ -143,6 +148,7 @@ export default {
       'menuItems',
       'beverages',
       'loading',
+      'error',
     ]),
 
     ...mapGetters('stars', [
