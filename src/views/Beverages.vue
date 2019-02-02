@@ -2,19 +2,25 @@
   <div
     v-if="showBeverages"
     class="beverages">
-    <span class="product-group__star">
-      <input
-        :checked="productGroupIsChecked"
-        type="checkbox"
-        name="star--checkbox"
-        class="star--checkbox"
-        @change="toggleStarredProductGroup($event.target.checked)">
-      <label
-        for="star--checkbox"
-        class="star--label" />
-    </span>
-    <h1>{{ getProductGroup() }}</h1>
-    <p>Nästa släpp sker <b>{{ nextRelease() }}</b>.</p>
+    <div class="product-group">
+      <div class="product-group__info">
+        <h1 class="product-group__title">
+          {{ getProductGroup() }}
+        </h1>
+        <p>Nästa släpp sker <b>{{ nextRelease() }}</b>.</p>
+      </div>
+      <div class="product-group__star">
+        <input
+          :checked="productGroupIsChecked"
+          type="checkbox"
+          name="star--checkbox"
+          class="star--checkbox"
+          @change="toggleStarredProductGroup($event.target.checked)">
+        <label
+          for="star--checkbox"
+          class="star--label" />
+      </div>
+    </div>
     <accordion>
       <accordion-item
         v-for="beverage in getBeverages()"
@@ -36,7 +42,64 @@
         <div
           slot="more-info"
           class="beverage__more-info">
-          <p class="beverage__star">
+          <div class="beverage__attribute">
+            <p v-if="beverage.product_group">
+              <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
+              <span class="beverage__attribute">{{ beverageType(beverage) }}</span>
+            </p>
+
+            <p v-if="beverage.style">
+              <span class="beverage__attribute beverage__attribute--bold">Stil: </span>
+              <span class="beverage__attribute">{{ beverage.style }}</span>
+            </p>
+
+            <p v-if="beverage.year">
+              <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
+              <span class="beverage__attribute">{{ beverage.year }}</span>
+            </p>
+
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">Alkoholhalt: </span>
+              <span class="beverage__attribute">{{ beverage.alcohol }}</span>
+            </p>
+
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
+              <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
+            </p>
+
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">
+                {{ beverage.product_group === 'Öl' ? 'Bryggeri' : 'Producent' }}:
+              </span>
+              <span class="beverage__attribute">{{ beverage.producer }}</span>
+            </p>
+
+            <p v-if="beverage.provider">
+              <span class="beverage__attribute beverage__attribute--bold">Leverantör: </span>
+              <span class="beverage__attribute">{{ beverage.provider }}</span>
+            </p>
+
+            <p v-if="beverage.price_per_liter">
+              <span class="beverage__attribute beverage__attribute--bold">
+                Kr/l - jämförelsepris:
+              </span>
+              <span class="beverage__attribute">{{ beverage.price_per_liter }}</span>
+            </p>
+
+            <p v-if="beverage.sealing">
+              <span class="beverage__attribute beverage__attribute--bold">
+                Förslutning:
+              </span>
+              <span class="beverage__attribute">{{ beverage.sealing }}</span>
+            </p>
+
+            <p>
+              <span class="beverage__attribute beverage__attribute--bold">Säljstart: </span>
+              <span class="beverage__attribute">{{ beverage.sales_start }}</span>
+            </p>
+          </div>
+          <div class="beverage__star">
             <input
               :checked="beverageIsChecked(beverage)"
               type="checkbox"
@@ -46,63 +109,7 @@
             <label
               for="star--checkbox"
               class="star--label" />
-          </p>
-
-          <p v-if="beverage.product_group">
-            <span class="beverage__attribute beverage__attribute--bold">Typ: </span>
-            <span class="beverage__attribute">{{ beverageType(beverage) }}</span>
-          </p>
-
-          <p v-if="beverage.style">
-            <span class="beverage__attribute beverage__attribute--bold">Stil: </span>
-            <span class="beverage__attribute">{{ beverage.style }}</span>
-          </p>
-
-          <p v-if="beverage.year">
-            <span class="beverage__attribute beverage__attribute--bold">Årgång: </span>
-            <span class="beverage__attribute">{{ beverage.year }}</span>
-          </p>
-
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Alkoholhalt: </span>
-            <span class="beverage__attribute">{{ beverage.alcohol }}</span>
-          </p>
-
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Volym: </span>
-            <span class="beverage__attribute">{{ beverage.volume_in_milliliter }} ml</span>
-          </p>
-
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">
-              {{ beverage.product_group === 'Öl' ? 'Bryggeri' : 'Producent' }}:
-            </span>
-            <span class="beverage__attribute">{{ beverage.producer }}</span>
-          </p>
-
-          <p v-if="beverage.provider">
-            <span class="beverage__attribute beverage__attribute--bold">Leverantör: </span>
-            <span class="beverage__attribute">{{ beverage.provider }}</span>
-          </p>
-
-          <p v-if="beverage.price_per_liter">
-            <span class="beverage__attribute beverage__attribute--bold">
-              Kr/l - jämförelsepris:
-            </span>
-            <span class="beverage__attribute">{{ beverage.price_per_liter }}</span>
-          </p>
-
-          <p v-if="beverage.sealing">
-            <span class="beverage__attribute beverage__attribute--bold">
-              Förslutning:
-            </span>
-            <span class="beverage__attribute">{{ beverage.sealing }}</span>
-          </p>
-
-          <p>
-            <span class="beverage__attribute beverage__attribute--bold">Säljstart: </span>
-            <span class="beverage__attribute">{{ beverage.sales_start }}</span>
-          </p>
+          </div>
         </div>
       </accordion-item>
     </accordion>
@@ -262,28 +269,26 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  text-align: left;
-}
-
 h2 {
   font-size: 1.5rem;
   font-weight: normal;
   text-align: center;
 }
 
-.beverages {
-  max-width: 799px;
-  padding: 0 1rem 1rem;
-  margin: 2rem auto;
-  background-color: #fff;
-  border: 1px solid #f1f1f1;
-  box-shadow: 3px 3px 10px 5px #e7e7e7;
+.product-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-group__info {
+  flex: auto 1 0;
+}
+
+.product-group__title {
   text-align: left;
 }
 
 .product-group__star {
-  float: right;
   margin-top: 1rem;
   width: 2rem;
   height: 2rem;
@@ -319,6 +324,16 @@ label.star--label {
   background-image: url('../assets/star.svg');
 }
 
+.beverages {
+  max-width: 799px;
+  padding: 0 1rem 1rem;
+  margin: 2rem auto;
+  background-color: #fff;
+  border: 1px solid #f1f1f1;
+  box-shadow: 3px 3px 10px 5px #e7e7e7;
+  text-align: left;
+}
+
 .beverages__info {
   padding: 1rem;
 }
@@ -331,6 +346,8 @@ label.star--label {
 }
 
 .beverage__more-info {
+  display: flex;
+  align-items: flex-start;
   padding: 1rem;
 }
 
@@ -340,8 +357,16 @@ label.star--label {
   height: 3rem;
 }
 
+.beverage__attribute {
+  flex: auto 1 0;
+}
+
+.beverage__attribute > p {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
 .beverage__star {
-  float: right;
 }
 
 .beverage__attribute--bold {
