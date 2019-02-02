@@ -193,7 +193,7 @@ export default {
         return this.beverages[this.$route.params.productGroup];
       }
 
-      if (this.starredProductGroup) {
+      if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
         return this.beverages[this.starredProductGroup];
       }
 
@@ -205,7 +205,7 @@ export default {
         return this.$route.params.productGroup;
       }
 
-      if (this.starredProductGroup) {
+      if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
         return this.starredProductGroup;
       }
 
