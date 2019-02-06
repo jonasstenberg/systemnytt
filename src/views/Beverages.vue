@@ -278,6 +278,7 @@ h2 {
 .product-group {
   display: flex;
   justify-content: space-between;
+  padding: 1rem;
 }
 
 .product-group__info {
@@ -326,7 +327,7 @@ label.star--label {
 
 .beverages {
   max-width: 799px;
-  padding: 0 1rem 1rem;
+  padding-bottom: 1rem;
   margin: 2rem auto;
   background-color: #fff;
   border: 1px solid #f1f1f1;
@@ -381,5 +382,15 @@ label.star--label {
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
+}
+
+@media (min-width: 799px) {
+  .beverages {
+    padding: 0 1rem 1rem;
+  }
+
+  .product-group {
+    padding: 0;
+  }
 }
 </style>
