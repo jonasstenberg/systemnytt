@@ -1,6 +1,11 @@
 <template>
   <main id="app">
-    <h1>systemnytt</h1>
+    <h1 class="title">
+      systemnytt.se
+    </h1>
+    <h4 class="title__description">
+      småpartier på systembolaget
+    </h4>
     <navigation
       :items="menuItems" />
     <router-view />
@@ -67,8 +72,17 @@ main {
   flex: 1;
 }
 
-h1 {
+.title {
   text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+.title__description {
+  text-align: center;
+  font-weight: normal;
+  font-size: 1rem;
+  margin-top: 0;
 }
 
 footer {
