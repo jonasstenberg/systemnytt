@@ -47,8 +47,8 @@ jobs:
 
       - run:
           name: Deploy to S3
-          command: cd dist && aws s3 cp . s3://systemnytt.se/ --recursive --acl public-read --region eu-north-1
+          command: cd dist && aws s3 sync . s3://systemnytt.se/ --acl public-read --region eu-north-1 --delete
 
       - run:
           name: Invalidate cache
-          command: aws cloudfront create-invalidation --distribution-id E1BBQ4CAGEREIL --paths "/*"
+          command: aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
