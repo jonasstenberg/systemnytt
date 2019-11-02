@@ -39,13 +39,11 @@ export default {
 
     if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
       this.setProductGroup(this.$route.params.productGroup);
-    }
-
-    if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
+    } else if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
       this.setProductGroup(this.starredProductGroup);
+    } else {
+      this.setProductGroup(this.menuItems[0].key);
     }
-
-    this.setProductGroup(this.menuItems[0].key);
 
     this.$router.replace({
       path: this.productGroup,
