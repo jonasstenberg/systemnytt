@@ -5,7 +5,7 @@
     <div class="product-group">
       <div class="product-group__info">
         <h1 class="product-group__title">
-          {{ getProductGroup() }}
+          {{ productGroup }}
         </h1>
         <div class="product-group__star">
           <input
@@ -179,6 +179,7 @@ export default {
     ...mapGetters('beverages', [
       'menuItems',
       'beverages',
+      'productGroup',
       'releaseDates',
       'selectedReleaseDate',
       'loading',
@@ -197,7 +198,7 @@ export default {
 
     productGroupIsChecked() {
       if (this.starredProductGroup
-        && this.starredProductGroup === this.getProductGroup()) {
+        && this.starredProductGroup === this.productGroup) {
         return true;
       }
       return false;
@@ -319,19 +320,7 @@ export default {
     },
 
     getBeverages() {
-      const getBeverages = () => {
-        if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
-          return this.beverages[this.$route.params.productGroup];
-        }
-
-        if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
-          return this.beverages[this.starredProductGroup];
-        }
-
-        return this.beverages[this.menuItems[0].key];
-      };
-
-      const beverages = getBeverages();
+      const beverages = this.beverages[this.productGroup];
 
       if (!this.searchPhrase) {
         return beverages;
@@ -349,18 +338,6 @@ export default {
           || (beverage.year && beverage.year.toString().indexOf(this.searchPhrase) > -1)
           || (beverage.packaging
             && beverage.packaging.toLowerCase().indexOf(this.searchPhrase) > -1));
-    },
-
-    getProductGroup() {
-      if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
-        return this.$route.params.productGroup;
-      }
-
-      if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
-        return this.starredProductGroup;
-      }
-
-      return this.menuItems[0].key;
     },
 
     beverageType(beverage) {

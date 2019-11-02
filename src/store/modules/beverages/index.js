@@ -14,6 +14,7 @@ const initialState = {
 
 const getters = {
   beverages: state => state.beverages,
+  productGroup: state => state.productGroup,
   selectedReleaseDate: state => state.selectedReleaseDate,
   releaseDates: state => state.releaseDates,
   searchPhrase: state => state.searchPhrase,
@@ -96,6 +97,10 @@ const actions = {
   setSearchPhrase({ commit }, searchPhrase) {
     commit(types.SET_SEARCH_PHRASE, searchPhrase);
   },
+
+  setProductGroup({ commit }, productGroup) {
+    commit(types.SET_PRODUCT_GROUP, productGroup);
+  },
 };
 
 const mutations = {
@@ -105,6 +110,10 @@ const mutations = {
 
   [types.FETCH_BEVERAGES](state, beverages) {
     Vue.set(state, 'beverages', beverages);
+  },
+
+  [types.SET_PRODUCT_GROUP](state, productGroup) {
+    Vue.set(state, 'productGroup', productGroup);
   },
 
   [types.SET_RELEASE_DATES](state, releaseDates) {
