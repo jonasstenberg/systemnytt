@@ -1,5 +1,5 @@
 {
-  "name": "systemnytt-2.0",
+  "name": "systemnytt",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
+    "lint-staged": "^9.4.2",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
     "vuex": "^3.0.1",
@@ -28,6 +29,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "husky": "^3.0.9",
     "vue-template-compiler": "^2.6.10"
   },
   "jest": {
