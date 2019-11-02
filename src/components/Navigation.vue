@@ -93,7 +93,7 @@ export default {
 
   .navigation__list-item {
     flex-shrink: 0;
-    padding: 0.5rem 0;
+    padding: 0;
   }
 
   .navigation__link {
@@ -133,7 +133,15 @@ export default {
     }
 
     .navigation__list-item {
-      margin: 0.5rem 0;
+      margin: 0;
+    }
+
+    .navigation__list-item:last-child > .navigation__link {
+      margin-left: 0;
+    }
+
+    .navigation__list-item:first-child > .navigation__link {
+      margin-left: 0;
     }
 
     .navigation::after,
