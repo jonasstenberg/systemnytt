@@ -27,12 +27,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install awscli
-      run: sudo apt-get -y -qq install awscli
-
-    - name: Enable Cloudfront CLI
-      run: aws configure set preview.cloudfront true
-
     - name: npm install, build, and test
       run: |
         npm ci
@@ -42,6 +36,7 @@ jobs:
 
     - name: Deploy to S3 and invalidate cache
       run: |
+        aws configure set preview.cloudfront true
         aws s3 sync ./dist s3://systemnytt.se/ --acl public-read --region eu-north-1 --delete
         aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
       env:
