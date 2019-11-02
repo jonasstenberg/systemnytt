@@ -1,6 +1,6 @@
-const formatDate = (date) => {
+export default (date) => {
   const d = new Date(date);
-  let month = `${(d.getMonth() + 1)}`;
+  let month = `${d.getMonth() + 1}`;
   let day = `${d.getDate()}`;
   const year = `${d.getFullYear()}`;
 
@@ -13,15 +13,3 @@ const formatDate = (date) => {
 
   return [year, month, day].join('-');
 };
-
-export const getStartDate = () => formatDate(Date.now());
-
-export const getEndDate = () => {
-  const date = new Date(Date.now());
-  date.setDate(date.getDate() + 7);
-
-  return formatDate(date);
-};
-
-// export const getStartDate = () => '2018-10-01';
-// export const getEndDate = () => '2018-10-10';

@@ -28,7 +28,11 @@ export default {
   },
 
   async created() {
-    await this.fetchBeverages();
+    if (this.$route.query.release_date) {
+      await this.fetchBeverages(this.$route.query.release_date);
+    } else {
+      await this.fetchBeverages();
+    }
   },
 
   methods: {

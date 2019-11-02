@@ -7,18 +7,32 @@
         <h1 class="product-group__title">
           {{ getProductGroup() }}
         </h1>
-        <p>Nästa släpp sker <b>{{ nextRelease() }}</b>.</p>
-      </div>
-      <div class="product-group__star">
-        <input
-          :checked="productGroupIsChecked"
-          type="checkbox"
-          name="star--checkbox"
-          class="star--checkbox"
-          @change="toggleStarredProductGroup($event.target.checked)">
-        <label
-          for="star--checkbox"
-          class="star--label" />
+        <div class="product-group__star">
+          <input
+            :checked="productGroupIsChecked"
+            type="checkbox"
+            name="star--checkbox"
+            class="star--checkbox"
+            @change="toggleStarredProductGroup($event.target.checked)">
+          <label
+            for="star--checkbox"
+            class="star--label" />
+        </div>
+    </div>
+      <div class="product-group__releases">
+        <div class="product-group__releases-next">
+          Det här släppet sker <b>{{ nextRelease() }}</b>.
+        </div>
+        <div class="product-group__releases-pagination">
+          <button
+            class="product-group__releases-pagination-btn"
+            :disabled="prevDisabled"
+            @click="prev()">Förra</button>
+          <button
+            class="product-group__releases-pagination-btn"
+            :disabled="nextDisabled"
+            @click="next()">Nästa</button>
+        </div>
       </div>
     </div>
     <accordion>
@@ -154,6 +168,8 @@ export default {
     ...mapGetters('beverages', [
       'menuItems',
       'beverages',
+      'releaseDates',
+      'selectedReleaseDate',
       'loading',
       'error',
     ]),
@@ -174,12 +190,44 @@ export default {
       }
       return false;
     },
+
+    nextDisabled() {
+      // eslint-disable-next-line consistent-return
+      const findNext = (key, keys) => {
+        if (keys.indexOf(key) > -1) {
+          const nextIndex = keys.indexOf(key) + 1;
+          const next = keys[nextIndex];
+
+          return next;
+        }
+      };
+
+      return !findNext(this.selectedReleaseDate, this.releaseDates);
+    },
+
+    prevDisabled() {
+      // eslint-disable-next-line consistent-return
+      const findPrev = (key, keys) => {
+        if (keys.indexOf(key) > -1) {
+          const nextIndex = keys.indexOf(key) - 1;
+          const next = keys[nextIndex];
+
+          return next;
+        }
+      };
+
+      return !findPrev(this.selectedReleaseDate, this.releaseDates);
+    },
   },
 
   methods: {
     ...mapActions('stars', [
       'starProductGroup',
       'starBeverages',
+    ]),
+
+    ...mapActions('beverages', [
+      'fetchBeverages',
     ]),
 
     iconUrl(packaging, filled) {
@@ -192,11 +240,64 @@ export default {
     },
 
     nextRelease() {
-      return this.beverages[this.menuItems[0].key][0].sales_start;
+      const stringDate = this.beverages[this.menuItems[0].key][0].sales_start;
+      const date = new Date(stringDate);
+
+      const locale = 'sv-SE';
+      const weekday = date.toLocaleString(locale, { weekday: 'long' });
+      const month = date.toLocaleString(locale, { month: 'long' });
+
+      return `${weekday} den ${date.getDate()} ${month}`;
+    },
+
+    async prev() {
+      // eslint-disable-next-line consistent-return
+      const findPrev = (key, keys) => {
+        if (keys.indexOf(key) > -1) {
+          const nextIndex = (keys.indexOf(key) - 1) % keys.length;
+          const next = keys[nextIndex];
+
+          return next;
+        }
+      };
+
+      const previousReleaseDate = findPrev(this.selectedReleaseDate, this.releaseDates);
+
+      this.$router.replace({
+        name: this.$route.name,
+        query: Object.assign({}, this.$route.query, {
+          release_date: previousReleaseDate,
+        }),
+      });
+
+      await this.fetchBeverages(previousReleaseDate);
+    },
+
+    async next() {
+      // eslint-disable-next-line consistent-return
+      const findNext = (key, keys) => {
+        if (keys.indexOf(key) > -1) {
+          const nextIndex = (keys.indexOf(key) + 1) % keys.length;
+          const next = keys[nextIndex];
+
+          return next;
+        }
+      };
+
+      const nextReleaseDate = findNext(this.selectedReleaseDate, this.releaseDates);
+
+      this.$router.replace({
+        name: this.$route.name,
+        query: Object.assign({}, this.$route.query, {
+          release_date: nextReleaseDate,
+        }),
+      });
+
+      await this.fetchBeverages(nextReleaseDate);
     },
 
     getBeverages() {
-      if (this.$route.params.productGroup) {
+      if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
         return this.beverages[this.$route.params.productGroup];
       }
 
@@ -208,7 +309,7 @@ export default {
     },
 
     getProductGroup() {
-      if (this.$route.params.productGroup) {
+      if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
         return this.$route.params.productGroup;
       }
 
@@ -277,19 +378,16 @@ h2 {
 
 .product-group {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 1rem;
 }
 
 .product-group__info {
-  flex: auto 1 0;
-}
-
-.product-group__title {
-  text-align: left;
+  display: flex;
 }
 
 .product-group__star {
+  margin-left: auto;
   margin-top: 1rem;
   width: 2rem;
   height: 2rem;
@@ -297,6 +395,31 @@ h2 {
 
 .star--label {
   cursor: pointer;
+}
+
+.product-group__releases {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.product-group__releases-pagination {
+  margin-left: auto;
+}
+
+.product-group__releases-pagination-btn {
+  background: #03813c;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.product-group__releases-pagination-btn:disabled {
+  background: #ccc;
+  cursor: auto;
 }
 
 input[type=checkbox].star--checkbox {
@@ -386,7 +509,7 @@ label.star--label {
 
 @media (min-width: 799px) {
   .beverages {
-    padding: 0 1rem 1rem;
+    padding: 1rem;
   }
 
   .product-group {
