@@ -404,6 +404,7 @@ h2 {
 }
 
 .product-group__releases-pagination {
+  display: flex;
   margin-left: auto;
 }
 
