@@ -27,7 +27,7 @@ export default async (startDate, endDate) => {
 
   const params = {
     params: {
-      assortment: 'TSE',
+      assortment: 'TSE|TSLS',
       limit: 100,
       sales_start_from: startDate,
       sales_start_to: endDate,

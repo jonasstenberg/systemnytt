@@ -16,6 +16,7 @@ const getters = {
   beverages: state => state.beverages,
   selectedReleaseDate: state => state.selectedReleaseDate,
   releaseDates: state => state.releaseDates,
+  searchPhrase: state => state.searchPhrase,
   menuItems: state => state.menuItems,
   loading: state => state.loading,
   error: state => state.error,
@@ -91,6 +92,10 @@ const actions = {
   setSelectedReleaseDate({ commit }, selectedReleaseDate) {
     commit(types.SET_SELECTED_RELEASE_DATE, selectedReleaseDate);
   },
+
+  setSearchPhrase({ commit }, searchPhrase) {
+    commit(types.SET_SEARCH_PHRASE, searchPhrase);
+  },
 };
 
 const mutations = {
@@ -108,6 +113,10 @@ const mutations = {
 
   [types.SET_SELECTED_RELEASE_DATE](state, selectedReleaseDate) {
     Vue.set(state, 'selectedReleaseDate', selectedReleaseDate);
+  },
+
+  [types.SET_SEARCH_PHRASE](state, searchPhrase) {
+    Vue.set(state, 'searchPhrase', searchPhrase);
   },
 
   [types.SET_MENU_ITEMS](state, menuItems) {
