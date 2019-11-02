@@ -276,7 +276,7 @@ export default {
 
       const previousReleaseDate = findPrev(this.selectedReleaseDate, this.releaseDates);
 
-      this.$router.replace({
+      this.$router.push({
         name: this.$route.name,
         query: Object.assign({}, this.$route.query, {
           release_date: previousReleaseDate,
@@ -299,7 +299,7 @@ export default {
 
       const nextReleaseDate = findNext(this.selectedReleaseDate, this.releaseDates);
 
-      this.$router.replace({
+      this.$router.push({
         name: this.$route.name,
         query: Object.assign({}, this.$route.query, {
           release_date: nextReleaseDate,
