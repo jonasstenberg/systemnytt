@@ -346,6 +346,7 @@ export default {
           || (beverage.producer && beverage.producer.toLowerCase().indexOf(this.searchPhrase) > -1)
           || (beverage.provider && beverage.provider.toLowerCase().indexOf(this.searchPhrase) > -1)
           || (beverage.alcohol && beverage.alcohol.toLowerCase().indexOf(this.searchPhrase) > -1)
+          || (beverage.year && beverage.year.toString().indexOf(this.searchPhrase) > -1)
           || (beverage.packaging
             && beverage.packaging.toLowerCase().indexOf(this.searchPhrase) > -1));
     },
