@@ -1,11 +1,11 @@
 <template>
-  <div class="product-group__releases-pagination">
+  <div class="pagination">
     <button
-      class="product-group__releases-pagination-btn"
+      class="pagination__btn pagination__btn--back"
       :disabled="!findDate(selectedReleaseDate, releaseDates, 'back')"
-      @click="go('back')">Förra</button>
+      @click="go('back')">Föregående</button>
     <button
-      class="product-group__releases-pagination-btn"
+      class="pagination__btn pagination__btn--forward"
       :disabled="!findDate(selectedReleaseDate, releaseDates, 'forward')"
       @click="go('forward')">Nästa</button>
   </div>
@@ -63,12 +63,12 @@ export default {
 </script>
 
 <style scoped>
-.product-group__releases-pagination {
+.pagination {
   display: flex;
   margin-left: auto;
 }
 
-.product-group__releases-pagination-btn {
+.pagination__btn {
   background: #03813c;
   padding: 0.5rem 0.75rem;
   color: #fff;
@@ -76,14 +76,45 @@ export default {
   border-radius: 5px;
   margin-left: 0.5rem;
   cursor: pointer;
+  text-indent: -9999px;
+  line-height: 0;
 }
 
-.product-group__releases-pagination-btn:hover {
+.pagination__btn:hover {
   background: #05ad51;
 }
 
-.product-group__releases-pagination-btn:disabled {
+.pagination__btn:disabled {
   background: #ccc;
   cursor: auto;
+}
+
+.pagination__btn::after {
+  text-indent: 0;
+  display: block;
+  line-height: initial;
+}
+
+.pagination__btn--back::after {
+  content: "<";
+}
+
+.pagination__btn--forward::after {
+  content: ">";
+}
+
+@media (min-width: 799px) {
+  .pagination__btn {
+    text-indent: 0;
+    line-height: initial;
+  }
+
+  .pagination__btn--back::after {
+    content: initial;
+  }
+
+  .pagination__btn--forward::after {
+    content: initial;
+  }
 }
 </style>

@@ -172,6 +172,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .product-group__info {
@@ -234,7 +235,6 @@ label.star--label {
 @media (min-width: 799px) {
   .product-group {
     padding: 2rem;
-    border-bottom: 1px solid #f1f1f1;
   }
 }
 </style>
