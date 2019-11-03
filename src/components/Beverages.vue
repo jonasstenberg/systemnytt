@@ -186,7 +186,7 @@ export default {
 
 <style scoped>
 .beverages {
-  padding: 0 1rem 1rem;
+  padding: 0;
 }
 
 .beverage__title {

@@ -1,10 +1,10 @@
 <template>
   <li
     :aria-expanded="isExpanded ? 'true' : 'false'"
-    :class="['accordion-item', { 'accordion-item--expanded': isExpanded }]">
+    class="accordion-item">
     <h4
       role="button"
-      class="accordion-item__header"
+      :class="['accordion-item__header', { 'accordion-item__header-active': isExpanded }]"
       tabindex="0"
       @click="toggle"
       @keyup.enter="toggle">
@@ -56,17 +56,21 @@ export default {
 .accordion-item__header {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem 0.5rem 0;
-  margin: 0;
+  padding: 0 2rem 0 1rem;
+  margin: 3px;
   font-weight: normal;
   cursor: pointer;
 }
 
 .accordion-item__header:hover {
-  background: #f2f2f2;
+  background: #f1f1f1;
+  border: 3px solid #03813c;
+  margin: 0;
 }
 
-.accordion-item__content {
-  padding-bottom: 1rem;
+.accordion-item__header-active {
+  background-color: #f1f1f1;
+  border: 3px solid #03813c;
+  margin: 0;
 }
 </style>
