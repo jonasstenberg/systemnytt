@@ -20,6 +20,7 @@ export default {
       'beverages',
       'releaseDates',
       'selectedReleaseDate',
+      'productGroup',
     ]),
 
     nextDisabled() {
@@ -78,7 +79,7 @@ export default {
     },
 
     async prev() {
-      if (this.starredProductGroup) {
+      if (this.starredProductGroup && this.starredProductGroup !== this.productGroup) {
         this.setProductGroup(this.starredProductGroup);
       }
 
@@ -95,14 +96,14 @@ export default {
     },
 
     async next() {
-      if (this.starredProductGroup) {
+      if (this.starredProductGroup && this.starredProductGroup !== this.productGroup) {
         this.setProductGroup(this.starredProductGroup);
       }
 
       const nextReleaseDate = this.findNext(this.selectedReleaseDate, this.releaseDates);
 
       this.$router.push({
-        name: this.$route.name,
+        path: this.productGroup,
         query: Object.assign({}, this.$route.query, {
           release_date: nextReleaseDate,
         }),

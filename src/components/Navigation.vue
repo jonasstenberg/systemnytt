@@ -31,19 +31,7 @@ export default {
   computed: {
     ...mapGetters('beverages', [
       'selectedReleaseDate',
-      'beverages',
     ]),
-  },
-
-  methods: {
-    navigate(key) {
-      this.$router.push({
-        path: key,
-        query: Object.assign({}, this.$route.query, {
-          release_date: this.selectedReleaseDate,
-        }),
-      });
-    },
   },
 };
 </script>

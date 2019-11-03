@@ -145,7 +145,7 @@ export default {
 
     toggleStarredProductGroup(checked) {
       if (checked) {
-        this.starProductGroup(this.getProductGroup());
+        this.starProductGroup(this.productGroup);
       } else {
         this.starProductGroup(null);
       }
