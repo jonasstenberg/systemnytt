@@ -75,6 +75,7 @@ export default {
     ...mapGetters('beverages', [
       'menuItems',
       'beverages',
+      'selectedReleaseDate',
       'productGroup',
       'loading',
       'error',
@@ -113,10 +114,33 @@ export default {
     },
   },
 
+  watch: {
+    $route: {
+      async handler() {
+        const productGroup = this.$route.path.replace('/', '');
+        if (productGroup !== this.productGroup) {
+          this.setProductGroup(productGroup);
+        }
+
+        const releaseDate = this.$route.query.release_date;
+        if (releaseDate !== this.selectedReleaseDate) {
+          await this.fetchBeverages(releaseDate);
+          this.setSelectedReleaseDate(releaseDate);
+        }
+      },
+    },
+  },
+
   methods: {
     ...mapActions('stars', [
       'starProductGroup',
       'starBeverages',
+    ]),
+
+    ...mapActions('beverages', [
+      'fetchBeverages',
+      'setProductGroup',
+      'setSelectedReleaseDate',
     ]),
 
     toggleStarredProductGroup(checked) {

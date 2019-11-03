@@ -7,18 +7,18 @@
         v-for="item in items"
         :key="item.key"
         class="navigation__list-item">
-        <button
+        <router-link
           class="navigation__link"
-          @click="navigate(item.key)">
+          :to="`/${item.key}?release_date=${selectedReleaseDate}`">
           {{ item.key }} ({{ item.len }})
-        </button>
+        </router-link>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   props: {
@@ -36,13 +36,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('beverages', [
-      'setProductGroup',
-    ]),
-
     navigate(key) {
-      this.setProductGroup(key);
-
       this.$router.push({
         path: key,
         query: Object.assign({}, this.$route.query, {
@@ -94,19 +88,16 @@ export default {
 
   .navigation__list-item {
     flex-shrink: 0;
-    padding: 0;
+    padding: 0.5rem 0;
   }
 
   .navigation__link {
     background: #03813c;
     padding: 0.5rem 0.75rem;
-    font-size: 1rem;
     color: #fff;
     border-radius: 5px;
     text-decoration: none;
     margin: 0.25rem;
-    cursor: pointer;
-    border: 0;
   }
 
   .navigation__list-item:last-child > .navigation__link {
@@ -134,7 +125,7 @@ export default {
     }
 
     .navigation__list-item {
-      margin: 0;
+      margin: 0.5rem 0;
     }
 
     .navigation__list-item:last-child > .navigation__link {
