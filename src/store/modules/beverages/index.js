@@ -65,17 +65,6 @@ const actions = {
 
       const groupedResult = groupBy(result[selectedReleaseDate], 'product_group');
 
-      Object.keys(groupedResult).forEach((key) => {
-        groupedResult[key] = groupedResult[key].map((beverage) => {
-          let title = '';
-          title += beverage.name ? `${beverage.name} ` : '';
-          title += beverage.additional_name ? `${beverage.additional_name} ` : '';
-          title += beverage.alcohol ? `(${beverage.alcohol}) ` : '';
-          title += beverage.year ? `(${beverage.year}) ` : '';
-          return Object.assign({}, beverage, { title });
-        });
-      });
-
       const menuItems = Object.keys(groupedResult)
         .map(beverage => ({ key: beverage, len: groupedResult[beverage].length }))
         .sort((a, b) => b.len - a.len);

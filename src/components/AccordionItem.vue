@@ -46,7 +46,11 @@ export default {
   display: flex;
   flex-direction: column;
   list-style: none;
-  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
 }
 
 .accordion-item__header {

@@ -23,10 +23,10 @@ export default {
 
   computed: {
     ...mapGetters('beverages', [
-      'menuItems',
       'selectedReleaseDate',
       'beverages',
       'productGroup',
+      'menuItems',
     ]),
   },
 
@@ -37,20 +37,27 @@ export default {
       await this.fetchBeverages();
     }
 
-    if (this.$route.params.productGroup && this.beverages[this.$route.params.productGroup]) {
+    if (this.$route.params.productGroup) {
       this.setProductGroup(this.$route.params.productGroup);
     } else if (this.starredProductGroup && this.beverages[this.starredProductGroup]) {
       this.setProductGroup(this.starredProductGroup);
-    } else {
+    } else if (this.menuItems.length) {
       this.setProductGroup(this.menuItems[0].key);
     }
 
-    this.$router.replace({
-      path: this.productGroup,
-      query: Object.assign({}, this.$route.query, {
-        release_date: this.selectedReleaseDate,
-      }),
-    });
+    if (this.$route.path.length <= 1 && this.productGroup) {
+      this.$router.replace({
+        path: this.productGroup,
+      });
+    }
+
+    if (!this.$route.query.release_date && this.selectedReleaseDate) {
+      this.$router.replace({
+        query: Object.assign({}, this.$route.query, {
+          release_date: this.selectedReleaseDate,
+        }),
+      });
+    }
   },
 
   methods: {
