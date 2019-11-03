@@ -2,12 +2,12 @@
   <div class="product-group__releases-pagination">
     <button
       class="product-group__releases-pagination-btn"
-      :disabled="prevDisabled"
-      @click="prev()">Förra</button>
+      :disabled="!findDate(selectedReleaseDate, releaseDates, 'back')"
+      @click="go('back')">Förra</button>
     <button
       class="product-group__releases-pagination-btn"
-      :disabled="nextDisabled"
-      @click="next()">Nästa</button>
+      :disabled="!findDate(selectedReleaseDate, releaseDates, 'forward')"
+      @click="go('forward')">Nästa</button>
   </div>
 </template>
 
@@ -22,34 +22,6 @@ export default {
       'selectedReleaseDate',
       'productGroup',
     ]),
-
-    nextDisabled() {
-      // eslint-disable-next-line consistent-return
-      const findNext = (key, keys) => {
-        if (keys.indexOf(key) > -1) {
-          const nextIndex = keys.indexOf(key) + 1;
-          const next = keys[nextIndex];
-
-          return next;
-        }
-      };
-
-      return !findNext(this.selectedReleaseDate, this.releaseDates);
-    },
-
-    prevDisabled() {
-      // eslint-disable-next-line consistent-return
-      const findPrev = (key, keys) => {
-        if (keys.indexOf(key) > -1) {
-          const nextIndex = keys.indexOf(key) - 1;
-          const next = keys[nextIndex];
-
-          return next;
-        }
-      };
-
-      return !findPrev(this.selectedReleaseDate, this.releaseDates);
-    },
   },
 
   methods: {
@@ -58,58 +30,33 @@ export default {
       'setProductGroup',
     ]),
 
-    // eslint-disable-next-line consistent-return
-    findPrev(key, keys) {
+    findDate(key, keys, direction) {
       if (keys.indexOf(key) > -1) {
-        const nextIndex = (keys.indexOf(key) - 1) % keys.length;
+        const num = direction === 'back' ? -1 : 1;
+        const nextIndex = keys.indexOf(key) + num;
         const next = keys[nextIndex];
 
         return next;
       }
+
+      return null;
     },
 
-    // eslint-disable-next-line consistent-return
-    findNext(key, keys) {
-      if (keys.indexOf(key) > -1) {
-        const nextIndex = (keys.indexOf(key) + 1) % keys.length;
-        const next = keys[nextIndex];
-
-        return next;
-      }
-    },
-
-    async prev() {
+    async go(direction) {
       if (this.starredProductGroup && this.starredProductGroup !== this.productGroup) {
         this.setProductGroup(this.starredProductGroup);
       }
 
-      const previousReleaseDate = this.findPrev(this.selectedReleaseDate, this.releaseDates);
+      const releaseDate = this.findDate(this.selectedReleaseDate, this.releaseDates, direction);
 
       this.$router.push({
         path: this.productGroup,
         query: Object.assign({}, this.$route.query, {
-          release_date: previousReleaseDate,
+          release_date: releaseDate,
         }),
       });
 
-      await this.fetchBeverages(previousReleaseDate);
-    },
-
-    async next() {
-      if (this.starredProductGroup && this.starredProductGroup !== this.productGroup) {
-        this.setProductGroup(this.starredProductGroup);
-      }
-
-      const nextReleaseDate = this.findNext(this.selectedReleaseDate, this.releaseDates);
-
-      this.$router.push({
-        path: this.productGroup,
-        query: Object.assign({}, this.$route.query, {
-          release_date: nextReleaseDate,
-        }),
-      });
-
-      await this.fetchBeverages(nextReleaseDate);
+      await this.fetchBeverages(releaseDate);
     },
   },
 };
