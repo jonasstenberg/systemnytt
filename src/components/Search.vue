@@ -48,7 +48,7 @@ export default {
 .search {
   position: relative;
   display: flex;
-  flex: 0 1 10rem;
+  flex: 0 1 auto;
   max-height: 2.5rem;
 }
 
@@ -75,9 +75,11 @@ export default {
 }
 
 .search--input {
-  flex: 1 1 24rem;
   display: block;
+  appearance: none;
+  width: 100%;
   padding: 0.75rem 0.75rem 0.75rem 5.25rem;
+  margin: 0 auto;
   font-size: 0.875rem;
   background-color: #f1f1f1;
   border: 0;
