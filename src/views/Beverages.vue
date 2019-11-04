@@ -134,7 +134,6 @@ export default {
   methods: {
     ...mapActions('stars', [
       'starProductGroup',
-      'starBeverages',
     ]),
 
     ...mapActions('beverages', [

@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import search from '../mixins/search';
 
@@ -118,12 +118,15 @@ export default {
 
   computed: {
     ...mapGetters('stars', [
-      'starredProductGroup',
       'starredBeverages',
     ]),
   },
 
   methods: {
+    ...mapActions('stars', [
+      'starBeverages',
+    ]),
+
     title(beverage) {
       let title = '';
       title += beverage.name ? `${beverage.name} ` : '';
@@ -207,7 +210,7 @@ export default {
 }
 
 .beverage__attribute {
-  flex: auto 1 0;
+  flex: 1 1 auto;
 }
 
 .beverage__attribute > p {
@@ -220,7 +223,7 @@ export default {
 }
 
 .beverage__attribute--name {
-  flex: auto;
+  flex-basis: auto;
 }
 
 .beverage__attribute--price {
