@@ -26,6 +26,9 @@
         <pagination />
       </div>
       <search />
+      <div class="beverages__total">
+        <span class="beverages__total--number">{{ filteredBeverages.length }}</span> resultat
+      </div>
     </div>
     <beverages />
     <div
@@ -194,6 +197,10 @@ export default {
   padding: 1rem;
 }
 
+.beverages__total--number {
+  font-weight: bold;
+}
+
 .star--label {
   cursor: pointer;
 }
@@ -233,7 +240,7 @@ label.star--label {
 
 @media (min-width: 799px) {
   .product-group {
-    padding: 2rem;
+    padding: 2rem 2rem 1rem;
   }
 }
 </style>

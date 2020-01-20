@@ -50,6 +50,7 @@ export default {
   display: flex;
   flex: 0 1 auto;
   max-height: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .search--suggestions {
