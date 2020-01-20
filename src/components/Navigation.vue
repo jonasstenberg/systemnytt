@@ -110,6 +110,7 @@ export default {
       justify-content: center;
       flex-wrap: wrap;
       margin: 0 auto;
+      overflow-x: visible;
     }
 
     .navigation__list-item {
