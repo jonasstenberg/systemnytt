@@ -27,7 +27,9 @@
       </div>
       <search />
       <div class="beverages__total">
-        <span class="beverages__total--number">{{ filteredBeverages.length }}</span> resultat
+        <span class="beverages__total--number">
+          {{ (filteredBeverages && filteredBeverages.length ? filteredBeverages.length : 0) }}
+        </span> resultat
       </div>
     </div>
     <beverages />
