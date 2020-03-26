@@ -7,8 +7,8 @@ const initialState = {
 };
 
 const getters = {
-  starredProductGroup: state => state.starredProductGroup,
-  starredBeverages: state => state.starredBeverages,
+  starredProductGroup: (state) => state.starredProductGroup,
+  starredBeverages: (state) => state.starredBeverages,
 };
 
 const actions = {
@@ -37,7 +37,7 @@ const mutations = {
 
 const module = {
   namespaced: true,
-  state: Object.assign({}, initialState),
+  state: { ...initialState },
   getters,
   actions,
   mutations,

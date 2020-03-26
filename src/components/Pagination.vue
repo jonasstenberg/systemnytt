@@ -51,9 +51,10 @@ export default {
 
       this.$router.push({
         path: this.productGroup,
-        query: Object.assign({}, this.$route.query, {
-          release_date: releaseDate,
-        }),
+        query: {
+          ...this.$route.query,
+          release_date: this.selectedReleaseDate,
+        },
       });
 
       await this.fetchBeverages(releaseDate);

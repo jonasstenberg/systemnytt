@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const groupBy = key => array => array.reduce((objectsByKeyValue, obj) => {
+const groupBy = (key) => (array) => array.reduce((objectsByKeyValue, obj) => {
   const value = obj[key];
   // eslint-disable-next-line no-param-reassign
   objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
@@ -14,11 +14,12 @@ export default async (startDate, endDate) => {
     beverages.push(...data);
 
     if (data.length >= 100) {
-      const p = Object.assign({}, params, {
-        params: Object.assign({}, params.params, {
+      const p = {
+        params: {
+          ...params.params,
           offset: params.params.offset ? params.params.offset + data.length : data.length,
-        }),
-      });
+        },
+      };
       return getBeverages(p, beverages);
     }
 

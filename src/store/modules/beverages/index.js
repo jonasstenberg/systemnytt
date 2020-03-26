@@ -13,14 +13,14 @@ const initialState = {
 };
 
 const getters = {
-  beverages: state => state.beverages,
-  productGroup: state => state.productGroup,
-  selectedReleaseDate: state => state.selectedReleaseDate,
-  releaseDates: state => state.releaseDates,
-  searchPhrase: state => state.searchPhrase,
-  menuItems: state => state.menuItems,
-  loading: state => state.loading,
-  error: state => state.error,
+  beverages: (state) => state.beverages,
+  productGroup: (state) => state.productGroup,
+  selectedReleaseDate: (state) => state.selectedReleaseDate,
+  releaseDates: (state) => state.releaseDates,
+  searchPhrase: (state) => state.searchPhrase,
+  menuItems: (state) => state.menuItems,
+  loading: (state) => state.loading,
+  error: (state) => state.error,
 };
 
 const getStartDate = (releaseDate) => {
@@ -66,7 +66,7 @@ const actions = {
       const groupedResult = groupBy(result[selectedReleaseDate], 'product_group');
 
       const menuItems = Object.keys(groupedResult)
-        .map(beverage => ({ key: beverage, len: groupedResult[beverage].length }))
+        .map((beverage) => ({ key: beverage, len: groupedResult[beverage].length }))
         .sort((a, b) => b.len - a.len);
 
       commit(types.FETCH_BEVERAGES, groupedResult);
@@ -128,7 +128,7 @@ const mutations = {
 
 const module = {
   namespaced: true,
-  state: Object.assign({}, initialState),
+  state: { ...initialState },
   getters,
   actions,
   mutations,
