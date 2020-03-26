@@ -53,9 +53,10 @@ export default {
 
     if (!this.$route.query.release_date && this.selectedReleaseDate) {
       this.$router.replace({
-        query: Object.assign({}, this.$route.query, {
+        query: {
+          ...this.$route.query,
           release_date: this.selectedReleaseDate,
-        }),
+        },
       });
     }
   },

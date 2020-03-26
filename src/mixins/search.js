@@ -14,7 +14,7 @@ export default {
       }
 
       return beverages.filter(
-        beverage => beverage.name.toLowerCase().indexOf(this.searchPhrase) > -1
+        (beverage) => beverage.name.toLowerCase().indexOf(this.searchPhrase) > -1
           || (beverage.additional_name
             && beverage.additional_name.toLowerCase().indexOf(this.searchPhrase) > -1)
           || (beverage.type && beverage.type.toLowerCase().indexOf(this.searchPhrase) > -1)
