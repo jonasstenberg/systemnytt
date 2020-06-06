@@ -53,7 +53,7 @@ export default {
         path: this.productGroup,
         query: {
           ...this.$route.query,
-          release_date: this.selectedReleaseDate,
+          release_date: releaseDate,
         },
       });
 
