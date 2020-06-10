@@ -1,4 +1,6 @@
-# systemnytt
+# DEPRECATED
+
+This is no longer maintained. Please check out the [Hyperapp version](https://github.com/jonasstenberg/systemnytt-hyperapp).
 
 > Beverage news from Systembolaget
 
